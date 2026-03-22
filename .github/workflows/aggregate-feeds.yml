@@ -19,6 +19,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Build cidr_minimizer
+        run: cargo build --release
+        working-directory: cidr_minimizer
+
       - name: Download and process feeds
         run: python aggregator.py
 
@@ -31,15 +37,18 @@ jobs:
 
           gh release create "$TAG_NAME" \
             blocklist.bin \
+            blocklist.txt \
             --title "Blocklist Update - $TIMESTAMP" \
             --notes "Automated blocklist update from threat intelligence feeds.
 
           **Files:**
           - \`blocklist.bin\` - Threat intelligence data (binary format)
+          - \`blocklist.txt\` - Scored and CIDR-minimized blocklist (text format)
 
           **Download:**
           \`\`\`bash
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.bin
+          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.txt
           \`\`\`"
 
       - name: Clean up old releases

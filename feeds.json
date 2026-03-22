@@ -1278,5 +1278,15 @@
         "confidence": 0.95,
         "flags": ["is_anycast"],
         "categories": ["infrastructure"]
+    },
+    {
+        "name": "proxy_pub",
+        "url": "https://github.com/tn3w/IP2X/releases/latest/download/proxy_types.bin",
+        "description": "IP2X - Public proxy IPs (binary format)",
+        "regex": "",
+        "base_score": 0.7,
+        "confidence": 0.9,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
     }
 ]
