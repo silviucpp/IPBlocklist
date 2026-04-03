@@ -38,17 +38,20 @@ jobs:
           gh release create "$TAG_NAME" \
             blocklist.bin \
             blocklist.txt \
+            datacenter_asns.json \
             --title "Blocklist Update - $TIMESTAMP" \
             --notes "Automated blocklist update from threat intelligence feeds.
 
           **Files:**
           - \`blocklist.bin\` - Threat intelligence data (binary format)
           - \`blocklist.txt\` - Scored and CIDR-minimized blocklist (text format)
+          - \`datacenter_asns.json\` - Normalized datacenter ASN list
 
           **Download:**
           \`\`\`bash
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.bin
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.txt
+          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/datacenter_asns.json
           \`\`\`"
 
       - name: Clean up old releases

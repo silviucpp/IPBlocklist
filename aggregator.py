@@ -44,13 +44,88 @@ def download_source(url, timeout=30):
     return []
 
 
-def download_single_list(source):
-    ips = []
+def extract_feed_entries(source):
+    entries = []
 
     for line in download_source(source["url"]):
-        ips.extend(parse_line(line, source["regex"]))
+        entries.extend(parse_line(line, source["regex"]))
 
-    return source["name"], ips
+    return entries
+
+
+def download_single_list(source):
+    return source["name"], extract_feed_entries(source)
+
+
+def normalize_asn(asn):
+    asn_value = str(asn).upper().removeprefix("AS").strip()
+    return asn_value if asn_value.isdigit() else None
+
+
+def lookup_asn_prefixes(asn):
+    asn_num = normalize_asn(asn)
+    if asn_num is None:
+        return []
+
+    url = (
+        "https://stat.ripe.net/data/announced-prefixes/data.json?resource="
+        f"AS{asn_num}"
+    )
+
+    for attempt in range(1, 4):
+        try:
+            request = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0"},
+            )
+            with urllib.request.urlopen(request, timeout=20) as response:
+                data = json.loads(response.read().decode("utf-8"))
+                if data.get("status") != "ok":
+                    return []
+
+                prefixes = data.get("data", {}).get("prefixes", [])
+                return [prefix["prefix"] for prefix in prefixes if "prefix" in prefix]
+        except Exception as error:
+            print(
+                f"Error retrieving AS{asn_num} "
+                f"(attempt {attempt}/3): {error}"
+            )
+            if attempt < 3:
+                time.sleep(1)
+
+    print(f"Failed to retrieve ranges for AS{asn_num} after 3 attempts")
+    return []
+
+
+def download_datacenter_asn_feed(source):
+    asns = []
+    for asn in extract_feed_entries(source):
+        normalized_asn = normalize_asn(asn)
+        if normalized_asn is not None:
+            asns.append(normalized_asn)
+
+    unique_asns = sorted(set(asns))
+    prefixes = []
+
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = {
+            executor.submit(lookup_asn_prefixes, asn): asn for asn in unique_asns
+        }
+        for future in as_completed(futures):
+            asn = futures[future]
+            asn_prefixes = future.result()
+            prefixes.extend(asn_prefixes)
+            print(f"Resolved AS{asn}: {len(asn_prefixes)} prefixes")
+
+    return source["name"], prefixes, unique_asns
+
+
+def save_datacenter_asns(asns, path="datacenter_asns.json"):
+    with open(path, "w") as file:
+        json.dump(asns, file, indent=2)
+        file.write("\n")
+
+    print(f"Saved {path} with {len(asns)} ASNs")
 
 
 def download_all_feeds(sources):
@@ -180,8 +255,29 @@ def main():
     with open("feeds.json") as file:
         sources = json.load(file)
 
+    datacenter_source = next(
+        (source for source in sources if source["name"] == "datacenter_asns"),
+        None,
+    )
+    direct_sources = [
+        source for source in sources if source["name"] != "datacenter_asns"
+    ]
+
     print("Downloading feeds...")
-    feeds = download_all_feeds(sources)
+    feeds = download_all_feeds(direct_sources)
+
+    datacenter_asns = []
+    if datacenter_source is not None:
+        print("Resolving datacenter ASN ranges...")
+        feed_name, prefixes, datacenter_asns = download_datacenter_asn_feed(
+            datacenter_source
+        )
+        feeds[feed_name] = prefixes
+        print(
+            f"Resolved {len(datacenter_asns)} ASNs into {len(prefixes)} prefixes"
+        )
+
+    save_datacenter_asns(datacenter_asns)
 
     print("Processing feeds...")
     processed = process_feeds(feeds)

@@ -14,6 +14,7 @@ Threat intelligence aggregator that collects, processes, and serves IP reputatio
 <p align="center">
 <a href="https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin"><img src="https://img.shields.io/badge/download-blocklist.bin_(12MB)-red?style=for-the-badge&logo=download&logoColor=white" alt="Download Threat Data"></a>
 <a href="https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.txt"><img src="https://img.shields.io/badge/download-blocklist.txt_(23MB)-blue?style=for-the-badge&logo=download&logoColor=white" alt="Download Text Blocklist"></a>
+<a href="https://github.com/tn3w/IPBlocklist/releases/latest/download/datacenter_asns.json"><img src="https://img.shields.io/badge/download-datacenter_asns.json-green?style=for-the-badge&logo=download&logoColor=white" alt="Download Datacenter ASNs"></a>
 </p>
 
 </div>
@@ -30,7 +31,9 @@ Threat intelligence aggregator that collects, processes, and serves IP reputatio
 
 ## 📥 Download & Extract
 
-Two formats are available: a binary file for programmatic lookups, and a text blocklist for direct firewall use.
+Three artifacts are available: a binary database for programmatic lookups, a
+scored text blocklist for firewall use, and a JSON list of normalized
+datacenter ASNs.
 
 ```bash
 # Binary format — for programmatic lookups (12MB)
@@ -38,15 +41,18 @@ wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
 
 # Text format — for firewalls and ipset (23MB)
 wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.txt
+
+# JSON format — normalized datacenter ASN list
+wget https://github.com/tn3w/IPBlocklist/releases/latest/download/datacenter_asns.json
 ```
 
 ## 📊 Architecture
 
 ```
                                                  ┌─> blocklist.bin
-feeds.json ──────> aggregator.py ──> scoring ────┤   (binary, 12MB)
-  (config)           (processor)                 └─> cidr_minimizer ──> blocklist.txt
-                                                      (Rust, CIDR opt)    (text, 23MB)
+feeds.json ──────> aggregator.py ────────────────┼─> datacenter_asns.json
+    (config)           (processor)               └─> scoring ──> cidr_minimizer ──> blocklist.txt
+                                                                                   (Rust, CIDR opt)
 ```
 
 ## 📖 Overview
@@ -182,7 +188,7 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 - Parallel downloads with ThreadPoolExecutor (10 workers)
 - IPv4/IPv6 support with embedded address extraction
 - CIDR range expansion to [start, end] pairs
-- ASN resolution for datacenter and Tor networks
+- ASN-to-prefix expansion for the `datacenter_asns` feed via RIPEstat
 - Deduplication and sorting for binary search
 - Regex-based parsing for diverse feed formats
 - Proxy type integration from IP2X binary data
@@ -190,7 +196,6 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 **Special Handling**:
 
 - `datacenter_asns`: Resolves ASN numbers to IP ranges via RIPE API
-- `tor_onionoo`: Combines Tor relay list with known Tor ASNs
 - `proxy_types.bin`: Downloads pre-built proxy type ranges from [IP2X](https://github.com/tn3w/IP2X) (proxy types: PUB)
 - IPv6 mapped addresses: Extracts embedded IPv4 (::ffff:192.0.2.1)
 - 6to4 tunnels: Extracts IPv4 from 2002::/16 addresses
@@ -201,7 +206,11 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 python aggregator.py
 ```
 
-**Output**: Creates/updates `blocklist.bin` with all processed feeds and `datacenter_asns.json` with datacenter ASN list
+**Output**: Creates/updates `blocklist.bin`, `blocklist.txt`, and `datacenter_asns.json`
+
+`datacenter_asns.json` stores the normalized ASN values from the
+`datacenter_asns` feed. Those ASNs are also expanded into announced prefixes
+through the RIPEstat API and included in both blocklist outputs.
 
 ## 🐍 Python Lookup Examples
 
