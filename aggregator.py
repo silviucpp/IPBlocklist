@@ -17,7 +17,7 @@ try:
 except ImportError:
     _CFFI_AVAILABLE = False
 
-_CFFI_BROWSERS = ["chrome120", "chrome119", "chrome118", "edge99", "safari15_5"]
+_CFFI_BROWSERS = ["chrome120", "chrome119", "edge99", "safari15_5"]
 
 
 def parse_ip(ip_str):
