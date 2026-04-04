@@ -137,7 +137,7 @@ def normalize_asn(asn):
 def load_asn_prefixes():
     global _asn_prefixes
     try:
-        with open(_ASN_CACHE_PATH) as file:
+        with open(_ASN_PREFIXES_PATH) as file:
             _asn_prefixes = json.load(file)
         print(f"Loaded ASN prefixes with {len(_asn_prefixes)} entries")
     except FileNotFoundError:
