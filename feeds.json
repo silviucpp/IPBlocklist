@@ -817,6 +817,272 @@
         "categories": ["infrastructure"]
     },
     {
+        "name": "riskdb_lists_asn_hosting",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_hosting.txt",
+        "description": "OXL risk-db-lists hosting ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_crawler",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_crawler.txt",
+        "description": "OXL risk-db-lists crawler networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": []
+    },
+    {
+        "name": "riskdb_lists_net_hosting",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_hosting.txt",
+        "description": "OXL risk-db-lists hosting networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_vpn",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_vpn.txt",
+        "description": "OXL risk-db-lists VPN networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.5,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riskdb_lists_net_scanner",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_scanner.txt",
+        "description": "OXL risk-db-lists scanner networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.9,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "riskdb_lists_ip_crawler",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_crawler.txt",
+        "description": "OXL risk-db-lists crawler IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": []
+    },
+    {
+        "name": "riskdb_lists_ip_hosting",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_hosting.txt",
+        "description": "OXL risk-db-lists hosting IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_ip_proxy",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_proxy.txt",
+        "description": "OXL risk-db-lists proxy IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.4,
+        "confidence": 0.8,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riskdb_lists_ip_scanner",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_scanner.txt",
+        "description": "OXL risk-db-lists scanner IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.9,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "riskdb_lists_ip_vpn",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_vpn.txt",
+        "description": "OXL risk-db-lists VPN IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.5,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riskdb_lists_ip_tor",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_tor.txt",
+        "description": "OXL risk-db-lists Tor IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.55,
+        "confidence": 0.95,
+        "flags": ["is_tor", "is_anonymizer"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riskdb_lists_asn_crawler",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_crawler.txt",
+        "description": "OXL risk-db-lists crawler ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_crawler"],
+        "categories": []
+    },
+    {
+        "name": "riskdb_lists_asn_vpn",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_vpn.txt",
+        "description": "OXL risk-db-lists VPN ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riskdb_lists_asn_scanner",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_scanner.txt",
+        "description": "OXL risk-db-lists scanner ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "riskdb_lists_asn_isp",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_isp.txt",
+        "description": "OXL risk-db-lists ISP ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_isp"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_asn_education",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_education.txt",
+        "description": "OXL risk-db-lists education ASNs",
+        "regex": "^(?:AS)?([0-9]+)$",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "is_asn": true,
+        "flags": ["is_education"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_isp",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_isp.txt",
+        "description": "OXL risk-db-lists ISP networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_isp"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_education",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_education.txt",
+        "description": "OXL risk-db-lists education networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_education"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_dynamic",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_dynamic.txt",
+        "description": "OXL risk-db-lists dynamic networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_dynamic"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_net_top_10000_ips_4",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/top_10000_ips_4.txt",
+        "description": "OXL risk-db-lists top 10000 IPv4 reputation networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.6,
+        "confidence": 0.8,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "riskdb_lists_net_top_10000_ips_6",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/top_10000_ips_6.txt",
+        "description": "OXL risk-db-lists top 10000 IPv6 reputation networks",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.6,
+        "confidence": 0.8,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "riskdb_lists_ip_isp",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_isp.txt",
+        "description": "OXL risk-db-lists ISP IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_isp"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_ip_education",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_education.txt",
+        "description": "OXL risk-db-lists education IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_education"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_ip_dynamic",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_dynamic.txt",
+        "description": "OXL risk-db-lists dynamic IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_dynamic"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "riskdb_lists_ip_maybe_hacked",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_maybe_hacked.txt",
+        "description": "OXL risk-db-lists maybe hacked IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.8,
+        "confidence": 0.85,
+        "flags": ["is_compromised"],
+        "categories": ["compromised"]
+    },
+    {
+        "name": "riskdb_lists_ip_top_100000",
+        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/top_100000.txt",
+        "description": "OXL risk-db-lists top 100000 reported IPs",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.8,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
         "name": "datacenter_asns",
         "url": "https://raw.githubusercontent.com/brianhama/bad-asn-list/refs/heads/master/bad-asn-list.csv",
         "description": "Datacenter ASN ranges",

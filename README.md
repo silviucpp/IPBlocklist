@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/tn3w/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
-<img src="https://img.shields.io/badge/feeds-150-blue?style=for-the-badge" alt="Feed Count">
+<img src="https://img.shields.io/badge/feeds-176-blue?style=for-the-badge" alt="Feed Count">
 <img src="https://img.shields.io/badge/artifacts-3-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
@@ -17,9 +17,13 @@ artifacts:
 - `blocklist.txt`: scored, CIDR-minimized text blocklist for firewalls
 - `asns.json`: normalized ASN lists keyed by feed name
 
-The current dataset is built from 150 feeds and includes IPv4, IPv6, CIDR
+The current dataset is built from 176 feeds and includes IPv4, IPv6, CIDR
 ranges, announced prefixes derived from ASN feeds, and proxy-type ranges from
 IP2X.
+
+The feed set includes OXL risk-db-lists sources for hosting, crawlers, VPNs,
+scanners, proxies, Tor, ISP, education, dynamic, and top-reported reputation
+lists across ASN, network, and IP scopes.
 
 ## Downloads
 
@@ -147,6 +151,12 @@ Optional fields:
 
 ```text
 datacenter_asns
+riskdb_lists_asn_hosting
+riskdb_lists_asn_crawler
+riskdb_lists_asn_vpn
+riskdb_lists_asn_scanner
+riskdb_lists_asn_isp
+riskdb_lists_asn_education
 bgptools_personal_asns
 bgptools_dsl_asns
 bgptools_cdn_asns
@@ -250,7 +260,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 ## Performance
 
-- Total feeds: 150
+- Total feeds: 176
 - Proxy type ranges: 4.1M
 - Total entries: about 9.1M
 - Typical lookup latency: under 1 ms
