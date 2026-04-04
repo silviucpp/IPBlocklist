@@ -267,6 +267,20 @@ def write_varint(f, value):
             break
 
 
+def merge_ranges(ranges):
+    if not ranges:
+        return ranges
+
+    merged = [ranges[0]]
+    for start, end in ranges[1:]:
+        prev_start, prev_end = merged[-1]
+        if start <= prev_end + 1:
+            merged[-1] = (prev_start, max(prev_end, end))
+        else:
+            merged.append((start, end))
+    return merged
+
+
 def process_feeds(feeds):
     processed = {}
     for list_name, ip_strings in feeds.items():
@@ -296,7 +310,7 @@ def process_feeds(feeds):
                 ranges.append((addr, addr))
 
         ranges = sorted(set(ranges))
-        processed[list_name] = ranges
+        processed[list_name] = merge_ranges(ranges)
     return processed
 
 
@@ -481,7 +495,8 @@ def main():
 
     print("Loading proxy types...")
     proxy_feeds = download_proxy_types()
-    processed.update(proxy_feeds)
+    for name, ranges in proxy_feeds.items():
+        processed[name] = merge_ranges(sorted(ranges))
 
     source_map = {s["name"]: s for s in sources}
     write_blocklist_bin(processed, source_map)

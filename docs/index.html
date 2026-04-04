@@ -1055,6 +1055,58 @@
                 return { asn, name };
             }
 
+            function lookupASNFromPrefixes(ipStr) {
+                if (!asnCacheData) return null;
+                const v4 = isIPv4(ipStr);
+                if (!v4 && !isIPv6(ipStr)) return null;
+
+                const target = v4
+                    ? ipv4ToInt(ipStr)
+                    : ipv6ToBigInt(ipStr);
+
+                for (const [asn, prefixes]
+                    of Object.entries(asnCacheData)) {
+                    for (const cidr of prefixes) {
+                        const slash = cidr.indexOf('/');
+                        if (slash < 0) continue;
+                        const addr = cidr.substring(0, slash);
+                        const bits = parseInt(
+                            cidr.substring(slash + 1)
+                        );
+
+                        if (v4 && isIPv4(addr)) {
+                            const base = ipv4ToInt(addr);
+                            const hb = 32 - bits;
+                            if (hb > 31) continue;
+                            const mask = (-1 << hb) >>> 0;
+                            const start = (base & mask) >>> 0;
+                            const end =
+                                (start | (~mask >>> 0)) >>> 0;
+                            if (target >= start
+                                && target <= end) {
+                                return { asn, name: '' };
+                            }
+                        } else if (!v4 && addr.includes(':')) {
+                            const base = ipv6ToBigInt(addr);
+                            const shift = 128n - BigInt(bits);
+                            const size =
+                                shift >= 128n
+                                    ? 0n
+                                    : (1n << shift) - 1n;
+                            const mask =
+                                ((1n << 128n) - 1n) ^ size;
+                            const start = base & mask;
+                            const end = start | size;
+                            if (target >= start
+                                && target <= end) {
+                                return { asn, name: '' };
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+
             async function fetchASNForIP(ip) {
                 try {
                     const response = await fetch(
@@ -1400,14 +1452,21 @@
                     } else if (isIPv4(query) || isIPv6(query)) {
                         const matches = lookupIP(query);
 
-                        resultContent.innerHTML =
-                            `<div style="color:var(--text-dim);
-          font-size:0.85rem;margin-bottom:1rem">
-          <span class="spinner"></span>
-          Looking up ASN…
-        </div>` + renderIPResults(query, matches, null, []);
+                        let asnInfo = lookupASNFromPrefixes(query);
 
-                        const asnInfo = await fetchASNForIP(query);
+                        if (!asnInfo) {
+                            resultContent.innerHTML =
+                                `<div style="color:var(--text-dim);
+              font-size:0.85rem;margin-bottom:1rem">
+              <span class="spinner"></span>
+              Looking up ASN…
+            </div>` + renderIPResults(
+                                    query, matches, null, []
+                                );
+
+                            asnInfo = await fetchASNForIP(query);
+                        }
+
                         let asnMatches = [];
                         if (asnInfo) {
                             asnMatches = lookupASN(asnInfo.asn);

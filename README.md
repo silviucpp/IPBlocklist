@@ -32,7 +32,9 @@ A live lookup page is available at
 [tn3w.github.io/IPBlocklist](https://tn3w.github.io/IPBlocklist/). It loads
 `blocklist.bin`, `feeds.json`, `asns.json`, and `asn_prefixes.json` client-side
 and supports IP and ASN queries with detailed results, feed metadata tooltips,
-score visualization, and announced prefix listings per ASN.
+score visualization, and announced prefix listings per ASN. When looking up an
+IP, the demo resolves the ASN from `asn_prefixes.json` locally and only falls
+back to an external API when the IP is not covered by any cached prefix.
 
 GitHub release download URLs cannot be fetched directly from browser JavaScript
 because they redirect without the required CORS headers. The demo therefore
@@ -89,9 +91,9 @@ flowchart TD
 ## Pipeline
 
 `aggregator.py` downloads feed data, extracts IPs, CIDRs, and ASNs, resolves
-ASN feeds to announced prefixes through RIPEstat, merges everything into a
-common range format, writes `blocklist.bin`, writes `asns.json`, then passes
-scored ranges to `cidr_minimizer` to produce `blocklist.txt`.
+ASN feeds to announced prefixes through RIPEstat, merges overlapping ranges per
+feed, writes `blocklist.bin`, writes `asns.json`, then passes scored ranges to
+`cidr_minimizer` to produce `blocklist.txt`.
 
 Feeds marked with `is_asn` support two input modes:
 
