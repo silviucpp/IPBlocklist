@@ -1,6 +1,7 @@
 import json
 import time
 import ipaddress
+import ssl
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import defaultdict
@@ -30,11 +31,38 @@ def parse_line(line, regex):
     return results
 
 
+def is_expired_certificate_error(error):
+    cert_error = getattr(error, "reason", error)
+    return isinstance(cert_error, ssl.SSLCertVerificationError) and (
+        getattr(cert_error, "verify_code", None) == 10 or (
+        "certificate has expired"
+        in f"{getattr(cert_error, 'verify_message', '')} {cert_error}".lower()
+        )
+    )
+
+
+def urlopen_with_expired_cert_fallback(request, timeout):
+    try:
+        return urllib.request.urlopen(request, timeout=timeout)
+    except Exception as error:
+        if not is_expired_certificate_error(error):
+            raise
+
+        print(f"Ignoring expired TLS certificate for {request.full_url}")
+        insecure_context = ssl.create_default_context()
+        insecure_context.check_hostname = False
+        insecure_context.verify_mode = ssl.CERT_NONE
+        return urllib.request.urlopen(request, timeout=timeout, context=insecure_context)
+
+
 def download_source(url, timeout=30):
     for attempt in range(1, 4):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(request, timeout=timeout) as response:
+            with urlopen_with_expired_cert_fallback(
+                request,
+                timeout=timeout,
+            ) as response:
                 content = response.read().decode("utf-8", errors="ignore")
                 return content.splitlines()
         except Exception as error:
@@ -78,7 +106,7 @@ def lookup_asn_prefixes(asn):
                 url,
                 headers={"User-Agent": "Mozilla/5.0"},
             )
-            with urllib.request.urlopen(request, timeout=20) as response:
+            with urlopen_with_expired_cert_fallback(request, timeout=20) as response:
                 data = json.loads(response.read().decode("utf-8"))
                 if data.get("status") != "ok":
                     return []
@@ -200,7 +228,7 @@ def download_proxy_types():
     print(f"Downloading proxy_types.bin...")
     try:
         request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=60) as response:
+        with urlopen_with_expired_cert_fallback(request, timeout=60) as response:
             data = response.read()
     except Exception as error:
         print(f"Error downloading proxy_types.bin: {error}")

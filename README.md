@@ -192,6 +192,8 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 - Deduplication and sorting for binary search
 - Regex-based parsing for diverse feed formats
 - Proxy type integration from IP2X binary data
+- TLS verification stays enabled by default and retries without verification only
+    when the remote certificate is specifically expired
 
 **Special Handling**:
 
