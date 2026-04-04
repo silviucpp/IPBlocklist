@@ -130,6 +130,16 @@ def lookup_asn_prefixes(asn):
 
 
 def extract_normalized_asns(source):
+    static_asns = source.get("asns")
+    if static_asns is not None:
+        normalized = {
+            normalized_asn
+            for asn in static_asns
+            for normalized_asn in [normalize_asn(asn)]
+            if normalized_asn is not None
+        }
+        return sorted(normalized)
+
     asns = []
     for asn in extract_feed_entries(source):
         normalized_asn = normalize_asn(asn)
@@ -156,16 +166,19 @@ def download_asn_feed(source):
     return source["name"], prefixes, unique_asns
 
 
-def save_asn_artifact(source, asns):
-    path = source.get("asn_output_path")
-    if not path:
-        return
+def write_json_file(path, data):
+    temp_path = f"{path}.tmp"
 
-    with open(path, "w") as file:
-        json.dump(asns, file, indent=2)
+    with open(temp_path, "w") as file:
+        json.dump(data, file, indent=2, sort_keys=True)
         file.write("\n")
 
-    print(f"Saved {path} with {len(asns)} ASNs")
+    os.replace(temp_path, path)
+
+
+def save_asn_artifact(asn_lists, path="asns.json"):
+    write_json_file(path, asn_lists)
+    print(f"Saved {path} with {len(asn_lists)} ASN feeds")
 
 
 def download_all_feeds(sources):
@@ -302,16 +315,19 @@ def main():
 
     print("Downloading feeds...")
     feeds = download_all_feeds(direct_sources)
+    asn_lists = {}
 
     for source in asn_sources:
         print(f"Resolving ASN ranges for {source['name']}...")
         feed_name, prefixes, asns = download_asn_feed(source)
         feeds[feed_name] = prefixes
-        save_asn_artifact(source, asns)
+        asn_lists[feed_name] = asns
         print(
             f"Resolved {len(asns)} ASNs into {len(prefixes)} prefixes for "
             f"{feed_name}"
         )
+
+    save_asn_artifact(asn_lists)
 
     print("Processing feeds...")
     processed = process_feeds(feeds)
