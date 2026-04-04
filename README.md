@@ -32,25 +32,24 @@ A live lookup page is available at
 [ipblocklist.tn3w.dev](https://ipblocklist.tn3w.dev). It loads
 `blocklist.bin`, `feeds.json`, `asns.json`, and `asn_prefixes.json` client-side
 and supports IP and ASN queries with detailed results, feed metadata tooltips,
-score visualization, and announced prefix listings per ASN. When looking up an
-IP, the demo resolves the ASN from `asn_prefixes.json` locally and only falls
-back to an external API when the IP is not covered by any cached prefix.
+score visualization, and announced prefix listings per ASN.
 
-GitHub release download URLs cannot be fetched directly from browser JavaScript
-because they redirect without the required CORS headers. The demo therefore
-serves `blocklist.bin`, `asns.json`, and `asn_prefixes.json` from `docs/data/` on
-the same origin. The GitHub Pages workflow refreshes those files from the latest
-release on each deploy.
-
-For local preview:
+For a minimal, highly optimized API server see
+[tn3w/ipblocklist-api](https://github.com/tn3w/ipblocklist-api):
 
 ```bash
-mkdir -p docs/data
-wget -O docs/data/blocklist.bin https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
-wget -O docs/data/asns.json https://github.com/tn3w/IPBlocklist/releases/latest/download/asns.json
-wget -O docs/data/asn_prefixes.json https://github.com/tn3w/IPBlocklist/releases/latest/download/asn_prefixes.json
-cd docs
-python -m http.server 8080
+curl https://ipblocklist-api.tn3w.dev/lookup/1.2.3.4
+```
+
+```json
+{
+    "ip": "1.2.3.4",
+    "max_score": 0.81,
+    "top_category": "spam",
+    "categories": ["malware", "spam"],
+    "flags": ["is_spammer", "is_phishing"],
+    "feeds": ["hphosts_psh", "hphosts_fsa"]
+}
 ```
 
 ## Downloads
@@ -90,18 +89,12 @@ flowchart TD
 
 ## Pipeline
 
-`aggregator.py` downloads feed data, extracts IPs, CIDRs, and ASNs, resolves
-ASN feeds to announced prefixes through RIPEstat, merges overlapping ranges per
-feed, writes `blocklist.bin`, writes `asns.json`, then passes scored ranges to
-`cidr_minimizer` to produce `blocklist.txt`.
+`aggregator.py` downloads feeds, resolves ASNs to prefixes via RIPEstat, merges
+overlapping ranges, and writes `blocklist.bin`, `asns.json`, and `blocklist.txt`.
 
-Feeds marked with `is_asn` support two input modes:
-
-- Remote ASN feed: use `url` and `regex`
-- Static ASN feed: use `asns` and leave `url` and `regex` empty
-
-Non-malicious ASN category feeds can use `base_score: 0.0` so they remain
-available in `blocklist.bin` and `asns.json` without affecting `blocklist.txt`.
+Feeds marked `is_asn` support remote (`url` + `regex`) or static (`asns`) input.
+Use `base_score: 0.0` to include an ASN feed in `blocklist.bin`/`asns.json`
+without affecting `blocklist.txt`.
 
 ## Artifacts
 
@@ -231,46 +224,6 @@ Optional fields:
 
 - `provider_name`
 - `asns`
-
-## ASN Feeds
-
-`asns.json` currently contains these feed names:
-
-```text
-datacenter_asns
-riskdb_lists_asn_hosting
-riskdb_lists_asn_crawler
-riskdb_lists_asn_vpn
-riskdb_lists_asn_scanner
-riskdb_lists_asn_isp
-riskdb_lists_asn_education
-bgptools_personal_asns
-bgptools_dsl_asns
-bgptools_cdn_asns
-bgptools_top10k_asns
-bgptools_vpn_asns
-bgptools_critical_infra_asns
-bgptools_tor_asns
-tor_static_asns
-bgptools_government_asns
-bgptools_academic_asns
-bgptools_ipv6_only_asns
-bgptools_event_asns
-bgptools_server_hosting_asns
-bgptools_c2_asns
-bgptools_ddos_mitigation_asns
-bgptools_mobile_asns
-bgptools_business_broadband_asns
-bgptools_satellite_asns
-bgptools_direct_feed_asns
-bgptools_corporate_asns
-bgptools_anycast_asns
-bgptools_rpki_rov_asns
-```
-
-`bgptools_tor_asns` is downloaded from BGP.tools.
-
-`tor_static_asns` is a static ASN feed stored directly in `feeds.json`.
 
 ## Usage
 
@@ -410,6 +363,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 - Total entries: about 9.1M
 - Typical lookup latency: under 1 ms
 - Binary size: about 12 MB
+- In-memory footprint: about 120 MB
 
 ## Contributers
 

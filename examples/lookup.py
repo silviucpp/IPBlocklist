@@ -1,4 +1,6 @@
-import struct, sys, ipaddress
+import ipaddress
+import struct
+import sys
 from bisect import bisect_right
 
 

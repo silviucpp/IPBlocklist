@@ -1,19 +1,20 @@
-import json
-import time
 import ipaddress
-import ssl
-import urllib.request
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from collections import defaultdict
-import struct
-import re
-import subprocess
+import json
 import os
 import random
+import re
+import ssl
+import struct
+import subprocess
 import threading
+import time
+import urllib.request
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 try:
     from curl_cffi import requests as cffi_requests
+
     _CFFI_AVAILABLE = True
 except ImportError:
     _CFFI_AVAILABLE = False
@@ -84,11 +85,13 @@ def download_source_cffi(url, timeout=30):
             )
             if response.status_code == 200:
                 return response.text.splitlines()
-            print(f"Error downloading {url} (attempt {attempt}/3): HTTP {response.status_code}")
+            print(
+                f"Error downloading {url} (attempt {attempt}/3): HTTP {response.status_code}"
+            )
         except Exception as error:
             print(f"Error downloading {url} (attempt {attempt}/3): {error}")
         if attempt < 3:
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
     return []
 
 

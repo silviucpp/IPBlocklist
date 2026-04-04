@@ -1,5 +1,5 @@
-import struct
 import socket
+import struct
 import sys
 from bisect import bisect_right
 from typing import NamedTuple
