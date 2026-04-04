@@ -25,6 +25,30 @@ The feed set includes OXL risk-db-lists sources for hosting, crawlers, VPNs,
 scanners, proxies, Tor, ISP, education, dynamic, and top-reported reputation
 lists across ASN, network, and IP scopes.
 
+## Demo
+
+A live lookup page is available at
+[tn3w.github.io/IPBlocklist](https://tn3w.github.io/IPBlocklist/). It loads
+`blocklist.bin`, `feeds.json`, and `asns.json` client-side and supports IP and
+ASN queries with detailed results, feed metadata tooltips, and score
+visualization.
+
+GitHub release download URLs cannot be fetched directly from browser JavaScript
+because they redirect without the required CORS headers. The demo therefore
+serves `blocklist.bin` and `asns.json` from `docs/data/` on the same origin.
+The GitHub Pages workflow refreshes those files from the latest release on each
+deploy.
+
+For local preview:
+
+```bash
+mkdir -p docs/data
+wget -O docs/data/blocklist.bin https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
+wget -O docs/data/asns.json https://github.com/tn3w/IPBlocklist/releases/latest/download/asns.json
+cd docs
+python -m http.server 8080
+```
+
 ## Downloads
 
 ```bash
