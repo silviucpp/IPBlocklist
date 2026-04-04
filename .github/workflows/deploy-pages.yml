@@ -37,7 +37,8 @@ jobs:
             --repo tn3w/IPBlocklist \
             --dir docs/data \
             --pattern blocklist.bin \
-            --pattern asns.json
+            --pattern asns.json \
+            --pattern asn_prefixes.json
 
       - uses: actions/configure-pages@v5
 

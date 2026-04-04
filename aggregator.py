@@ -10,6 +10,7 @@ import re
 import subprocess
 import os
 import random
+import threading
 
 try:
     from curl_cffi import requests as cffi_requests
@@ -18,6 +19,10 @@ except ImportError:
     _CFFI_AVAILABLE = False
 
 _CFFI_BROWSERS = ["chrome120", "chrome119", "edge99", "safari15_5"]
+
+_ASN_PREFIXES_PATH = "asn_prefixes.json"
+_asn_prefixes: dict = {}
+_asn_prefixes_lock = threading.Lock()
 
 
 def parse_ip(ip_str):
@@ -129,16 +134,36 @@ def normalize_asn(asn):
     return asn_value if asn_value.isdigit() else None
 
 
+def load_asn_prefixes():
+    global _asn_prefixes
+    try:
+        with open(_ASN_CACHE_PATH) as file:
+            _asn_prefixes = json.load(file)
+        print(f"Loaded ASN prefixes with {len(_asn_prefixes)} entries")
+    except FileNotFoundError:
+        _asn_prefixes = {}
+
+
+def save_asn_prefixes():
+    write_json_file(_ASN_PREFIXES_PATH, _asn_prefixes)
+    print(f"Saved ASN prefixes with {len(_asn_prefixes)} entries")
+
+
 def lookup_asn_prefixes(asn):
     asn_num = normalize_asn(asn)
     if asn_num is None:
         return []
+
+    with _asn_prefixes_lock:
+        if asn_num in _asn_prefixes:
+            return _asn_prefixes[asn_num]
 
     url = (
         "https://stat.ripe.net/data/announced-prefixes/data.json?resource="
         f"AS{asn_num}"
     )
 
+    prefixes = []
     for attempt in range(1, 4):
         try:
             request = urllib.request.Request(
@@ -148,17 +173,22 @@ def lookup_asn_prefixes(asn):
             with urlopen_with_expired_cert_fallback(request, timeout=20) as response:
                 data = json.loads(response.read().decode("utf-8"))
                 if data.get("status") != "ok":
-                    return []
+                    break
 
-                prefixes = data.get("data", {}).get("prefixes", [])
-                return [prefix["prefix"] for prefix in prefixes if "prefix" in prefix]
+                raw = data.get("data", {}).get("prefixes", [])
+                prefixes = [p["prefix"] for p in raw if "prefix" in p]
+                break
         except Exception as error:
-            print(f"Error retrieving AS{asn_num} " f"(attempt {attempt}/3): {error}")
+            print(f"Error retrieving AS{asn_num} (attempt {attempt}/3): {error}")
             if attempt < 3:
                 time.sleep(1)
+    else:
+        print(f"Failed to retrieve ranges for AS{asn_num} after 3 attempts")
 
-    print(f"Failed to retrieve ranges for AS{asn_num} after 3 attempts")
-    return []
+    with _asn_prefixes_lock:
+        _asn_prefixes[asn_num] = prefixes
+
+    return prefixes
 
 
 def extract_normalized_asns(source):
@@ -427,6 +457,8 @@ def main():
         source for source in sources if source.get("regex") and not source.get("is_asn")
     ]
 
+    load_asn_prefixes()
+
     print("Downloading feeds...")
     feeds = download_all_feeds(direct_sources)
     asn_lists = {}
@@ -442,6 +474,7 @@ def main():
         )
 
     save_asn_artifact(asn_lists)
+    save_asn_prefixes()
 
     print("Processing feeds...")
     processed = process_feeds(feeds)

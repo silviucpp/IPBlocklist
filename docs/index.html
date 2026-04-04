@@ -492,6 +492,29 @@
                 margin-bottom: 2rem;
             }
 
+            .prefix-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.35rem;
+                max-height: 220px;
+                overflow-y: auto;
+                margin-bottom: 1.5rem;
+                padding: 0.75rem;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+            }
+
+            .prefix-tag {
+                font-family: var(--mono);
+                font-size: 0.76rem;
+                padding: 0.2rem 0.5rem;
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                color: var(--text-dim);
+            }
+
             .no-matches {
                 color: var(--text-dim);
                 font-size: 0.9rem;
@@ -618,12 +641,14 @@
             const FEEDS_URL =
                 'https://raw.githubusercontent.com/tn3w/IPBlocklist/master/feeds.json';
             const ASNS_URL = './data/asns.json';
+            const ASN_CACHE_URL = './data/asn_prefixes.json';
             const CACHE_NAME = 'ipblocklist-v2';
             const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
             let blocklist = null;
             let feedsMeta = null;
             let asnsData = null;
+            let asnCacheData = null;
 
             const statusBar = document.getElementById('statusBar');
             const statusText = document.getElementById('statusText');
@@ -956,6 +981,10 @@
                 return results;
             }
 
+            function lookupASNRanges(asnNumber) {
+                return asnCacheData?.[asnNumber] ?? [];
+            }
+
             function parseCsvLine(line) {
                 const values = [];
                 let current = '';
@@ -1280,6 +1309,16 @@
             .join('')}
       </div>`;
                     }
+
+                    const asnRanges = lookupASNRanges(asnInfo.asn);
+                    if (asnRanges.length > 0) {
+                        html += `<div class="section-title">
+        Announced Prefixes (${asnRanges.length})
+      </div>
+      <div class="prefix-list">
+        ${asnRanges.map((p) => `<span class="prefix-tag">${escapeHtml(p)}</span>`).join('')}
+      </div>`;
+                    }
                 }
 
                 return html;
@@ -1328,6 +1367,16 @@
                 } else {
                     html += `<div class="no-matches">
       This ASN is not listed in any feed
+    </div>`;
+                }
+
+                const asnRanges = lookupASNRanges(asnNumber);
+                if (asnRanges.length > 0) {
+                    html += `<div class="section-title">
+      Announced Prefixes (${asnRanges.length})
+    </div>
+    <div class="prefix-list">
+      ${asnRanges.map((p) => `<span class="prefix-tag">${escapeHtml(p)}</span>`).join('')}
     </div>`;
                 }
 
@@ -1398,6 +1447,7 @@
                     const jsonPromise = Promise.all([
                         fetchJsonCached(FEEDS_URL, 'Failed to load feeds metadata.'),
                         fetchJsonCached(ASNS_URL),
+                        fetchJsonCached(ASN_CACHE_URL),
                     ]);
 
                     const buffer = await fetchBinaryWithProgress(
@@ -1419,12 +1469,13 @@
                         }
                     );
 
-                    const [loadedFeedsMeta, loadedAsnsData] = await jsonPromise;
+                    const [loadedFeedsMeta, loadedAsnsData, loadedAsnCacheData] = await jsonPromise;
 
                     setStatus('loading', 'Parsing blocklist…');
                     blocklist = parseBlocklist(buffer);
                     feedsMeta = loadedFeedsMeta;
                     asnsData = loadedAsnsData;
+                    asnCacheData = loadedAsnCacheData;
 
                     const date = new Date(blocklist.timestamp * 1000);
                     setStatus(

@@ -29,15 +29,15 @@ lists across ASN, network, and IP scopes.
 
 A live lookup page is available at
 [tn3w.github.io/IPBlocklist](https://tn3w.github.io/IPBlocklist/). It loads
-`blocklist.bin`, `feeds.json`, and `asns.json` client-side and supports IP and
-ASN queries with detailed results, feed metadata tooltips, and score
-visualization.
+`blocklist.bin`, `feeds.json`, `asns.json`, and `asn_prefixes.json` client-side
+and supports IP and ASN queries with detailed results, feed metadata tooltips,
+score visualization, and announced prefix listings per ASN.
 
 GitHub release download URLs cannot be fetched directly from browser JavaScript
 because they redirect without the required CORS headers. The demo therefore
-serves `blocklist.bin` and `asns.json` from `docs/data/` on the same origin.
-The GitHub Pages workflow refreshes those files from the latest release on each
-deploy.
+serves `blocklist.bin`, `asns.json`, and `asn_prefixes.json` from `docs/data/` on
+the same origin. The GitHub Pages workflow refreshes those files from the latest
+release on each deploy.
 
 For local preview:
 
@@ -45,6 +45,7 @@ For local preview:
 mkdir -p docs/data
 wget -O docs/data/blocklist.bin https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
 wget -O docs/data/asns.json https://github.com/tn3w/IPBlocklist/releases/latest/download/asns.json
+wget -O docs/data/asn_prefixes.json https://github.com/tn3w/IPBlocklist/releases/latest/download/asn_prefixes.json
 cd docs
 python -m http.server 8080
 ```
@@ -55,6 +56,7 @@ python -m http.server 8080
 wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
 wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.txt
 wget https://github.com/tn3w/IPBlocklist/releases/latest/download/asns.json
+wget https://github.com/tn3w/IPBlocklist/releases/latest/download/asn_prefixes.json
 ```
 
 ## Visualizations
@@ -267,6 +269,11 @@ Build the artifacts locally:
 ```bash
 python aggregator.py
 ```
+
+ASN prefix lookups are cached in `asn_prefixes.json` (ASN → announced prefixes).
+On the first run the cache is empty and every ASN is resolved via RIPEstat.
+Subsequent runs skip resolved ASNs and only fetch new ones, making incremental
+rebuilds significantly faster. Delete `asn_prefixes.json` to force a full refresh.
 
 Query `blocklist.bin` for one or more IPs:
 

@@ -42,6 +42,7 @@ jobs:
             blocklist.bin \
             blocklist.txt \
             asns.json \
+            asn_prefixes.json \
             --title "Blocklist Update - $TIMESTAMP" \
             --notes "Automated blocklist update from threat intelligence feeds.
 
