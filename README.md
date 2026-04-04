@@ -112,10 +112,10 @@ JSON object keyed by feed name.
 
 ```json
 {
-  "datacenter_asns": ["16509", "15169"],
-  "bgptools_c2_asns": ["14618"],
-  "bgptools_tor_asns": ["60729", "53667"],
-  "tor_static_asns": ["60729", "53667"]
+    "datacenter_asns": ["16509", "15169"],
+    "bgptools_c2_asns": ["14618"],
+    "bgptools_tor_asns": ["60729", "53667"],
+    "tor_static_asns": ["60729", "53667"]
 }
 ```
 
@@ -267,6 +267,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 - Binary size: about 12 MB
 
 ## Contributers
+
 - [tn3w](https://github.com/tn3w)
 - [silviucpp](https://github.com/silviucpp)
 
