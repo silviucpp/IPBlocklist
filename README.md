@@ -29,7 +29,7 @@ lists across ASN, network, and IP scopes.
 ## Demo
 
 A live lookup page is available at
-[tn3w.github.io/IPBlocklist](https://tn3w.github.io/IPBlocklist/). It loads
+[ipblocklist.tn3w.dev](https://ipblocklist.tn3w.dev). It loads
 `blocklist.bin`, `feeds.json`, `asns.json`, and `asn_prefixes.json` client-side
 and supports IP and ASN queries with detailed results, feed metadata tooltips,
 score visualization, and announced prefix listings per ASN. When looking up an
