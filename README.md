@@ -78,19 +78,38 @@ available in `blocklist.bin` and `asns.json` without affecting `blocklist.txt`.
 
 ### `blocklist.bin`
 
-Binary format for fast lookups.
+Self-describing binary format (v2) for fast lookups. No external JSON needed.
 
 ```text
-[4 bytes: timestamp]
-[2 bytes: feed count]
+[4 bytes: magic "IPBL"]
+[1 byte: version (2)]
+[4 bytes: timestamp (unix, LE)]
+[1 byte: flag count]
+for each flag:
+  [1 byte: name length]
+  [N bytes: flag name (utf-8)]
+[1 byte: category count]
+for each category:
+  [1 byte: name length]
+  [N bytes: category name (utf-8)]
+[2 bytes: feed count (LE)]
 for each feed:
   [1 byte: feed name length]
-  [N bytes: feed name]
-  [4 bytes: range count]
+  [N bytes: feed name (utf-8)]
+  [1 byte: base_score (0-200, divide by 200.0)]
+  [1 byte: confidence (0-200, divide by 200.0)]
+  [4 bytes: flags bitmask (LE, bit i = flag at index i)]
+  [1 byte: categories bitmask (bit i = category at index i)]
+  [4 bytes: range count (LE)]
   for each range:
-    [varint: start delta]
-    [varint: range size]
+    [varint: start delta from previous start]
+    [varint: range size (end - start)]
 ```
+
+Flags and categories are stored as string tables followed by bitmasks per feed,
+keeping the format compact and fully self-contained.
+
+See the `examples/` directory for lookup implementations in many languages.
 
 ### `blocklist.txt`
 
@@ -199,6 +218,46 @@ Query `blocklist.bin` for one or more IPs:
 python lookup.py 8.8.8.8 1.1.1.1
 ```
 
+Output includes feed metadata:
+
+```
+8.8.8.8: x4bnet_datacenter_ipv4 | score=0.11 | flags=is_datacenter | cats=infrastructure
+```
+
+## Example Implementations
+
+The `examples/` directory contains complete single-file lookup implementations:
+
+| Language   | File           | IPv6 |
+| ---------- | -------------- | ---- |
+| C          | `lookup.c`     | yes  |
+| C++        | `lookup.cpp`   | no   |
+| C#         | `lookup.cs`    | no   |
+| Crystal    | `lookup.cr`    | no   |
+| D          | `lookup.d`     | no   |
+| Dart       | `lookup.dart`  | no   |
+| Elixir     | `lookup.exs`   | no   |
+| Erlang     | `lookup.erl`   | no   |
+| Go         | `lookup.go`    | yes  |
+| Haskell    | `lookup.hs`    | no   |
+| Java       | `lookup.java`  | no   |
+| JavaScript | `lookup.js`    | no   |
+| Kotlin     | `lookup.kt`    | no   |
+| Lua        | `lookup.lua`   | no   |
+| Nim        | `lookup.nim`   | no   |
+| Perl       | `lookup.pl`    | no   |
+| PHP        | `lookup.php`   | no   |
+| Python     | `lookup.py`    | yes  |
+| Ruby       | `lookup.rb`    | yes  |
+| Rust       | `lookup.rs`    | yes  |
+| Scala      | `lookup.scala` | no   |
+| Shell      | `lookup.sh`    | no   |
+| Swift      | `lookup.swift` | no   |
+| TypeScript | `lookup.ts`    | no   |
+| Zig        | `lookup.zig`   | no   |
+
+A fully typed Python variant is in `lookup_typed.py`.
+
 Load the text blocklist into `ipset`:
 
 ```bash
@@ -270,6 +329,10 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 - [tn3w](https://github.com/tn3w)
 - [silviucpp](https://github.com/silviucpp)
+
+# AI Disclosure
+
+This project was developed with the assistance of AI tools, including GPT-5.4 and Claude Opus 4.6. These tools were used to help generate code, documentation, and other content. The human contributors provided guidance, review, and oversight throughout the development process to ensure the quality and accuracy of the final product. An example of AI-generated content is ./examples whch contains lookup implementations in multiple programming languages, created with the help of AI tools.
 
 ## License
 

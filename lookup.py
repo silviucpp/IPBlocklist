@@ -4,7 +4,6 @@ import sys
 from bisect import bisect_right
 from time import perf_counter
 
-
 MAGIC = b"IPBL"
 IPV4_MAX = 0xFFFFFFFF
 
@@ -40,13 +39,9 @@ def build_family_index(feed_index, ranges):
 
     indexed = []
     if ipv4_starts:
-        indexed.append(
-            (4, feed_index, tuple(ipv4_starts), tuple(ipv4_ends))
-        )
+        indexed.append((4, feed_index, tuple(ipv4_starts), tuple(ipv4_ends)))
     if ipv6_starts:
-        indexed.append(
-            (6, feed_index, tuple(ipv6_starts), tuple(ipv6_ends))
-        )
+        indexed.append((6, feed_index, tuple(ipv6_starts), tuple(ipv6_ends)))
     return indexed
 
 
@@ -58,9 +53,7 @@ def load_blocklist(path="blocklist.bin"):
     with open(path, "rb", buffering=1024 * 1024) as f:
         magic = f.read(4)
         if magic != MAGIC:
-            raise ValueError(
-                f"invalid magic: {magic!r}, expected {MAGIC!r}"
-            )
+            raise ValueError(f"invalid magic: {magic!r}, expected {MAGIC!r}")
 
         version = struct.unpack("<B", f.read(1))[0]
         if version != 2:
@@ -93,24 +86,22 @@ def load_blocklist(path="blocklist.bin"):
             cats_mask = struct.unpack("<B", f.read(1))[0]
 
             flags = [
-                flag_table[i]
-                for i in range(len(flag_table))
-                if flags_mask & (1 << i)
+                flag_table[i] for i in range(len(flag_table)) if flags_mask & (1 << i)
             ]
             categories = [
-                cat_table[i]
-                for i in range(len(cat_table))
-                if cats_mask & (1 << i)
+                cat_table[i] for i in range(len(cat_table)) if cats_mask & (1 << i)
             ]
 
             feed_index = len(feeds_meta)
-            feeds_meta.append({
-                "name": feed_name,
-                "base_score": base_score,
-                "confidence": confidence,
-                "flags": flags,
-                "categories": categories,
-            })
+            feeds_meta.append(
+                {
+                    "name": feed_name,
+                    "base_score": base_score,
+                    "confidence": confidence,
+                    "flags": flags,
+                    "categories": categories,
+                }
+            )
 
             range_count = struct.unpack("<I", f.read(4))[0]
             ranges = []
@@ -118,13 +109,9 @@ def load_blocklist(path="blocklist.bin"):
             for _ in range(range_count):
                 current_start += read_varint(f)
                 range_size = read_varint(f)
-                ranges.append(
-                    (current_start, current_start + range_size)
-                )
+                ranges.append((current_start, current_start + range_size))
 
-            for family, idx, starts, ends in build_family_index(
-                feed_index, ranges
-            ):
+            for family, idx, starts, ends in build_family_index(feed_index, ranges):
                 if family == 4:
                     ipv4_feeds.append((idx, starts, ends))
                 else:
@@ -146,9 +133,7 @@ def range_contains(starts, ends, target):
 def lookup_ip(feeds_meta, ipv4_feeds, ipv6_feeds, ip_value):
     address = ipaddress.ip_address(ip_value)
     target = int(address)
-    family_feeds = (
-        ipv4_feeds if address.version == 4 else ipv6_feeds
-    )
+    family_feeds = ipv4_feeds if address.version == 4 else ipv6_feeds
 
     matches = []
     for feed_index, starts, ends in family_feeds:
@@ -180,9 +165,7 @@ def main(argv):
     lookup_started = perf_counter()
     for ip_value in argv[1:]:
         try:
-            matches = lookup_ip(
-                feeds_meta, ipv4_feeds, ipv6_feeds, ip_value
-            )
+            matches = lookup_ip(feeds_meta, ipv4_feeds, ipv6_feeds, ip_value)
         except ValueError:
             print(f"{ip_value}: invalid IP")
             continue
@@ -195,10 +178,7 @@ def main(argv):
     lookup_elapsed = perf_counter() - lookup_started
 
     print(f"load time: {load_elapsed * 1000:.2f} ms")
-    print(
-        f"lookup time for {len(argv) - 1} IPs:"
-        f" {lookup_elapsed * 1000:.2f} ms"
-    )
+    print(f"lookup time for {len(argv) - 1} IPs:" f" {lookup_elapsed * 1000:.2f} ms")
 
     return 0
 

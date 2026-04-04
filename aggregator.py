@@ -372,12 +372,8 @@ def write_blocklist_bin(processed, source_map):
             f.write(struct.pack("<B", score))
             f.write(struct.pack("<B", conf))
 
-            flags_mask = encode_bitmask(
-                source.get("flags", []), flag_table
-            )
-            cats_mask = encode_bitmask(
-                source.get("categories", []), category_table
-            )
+            flags_mask = encode_bitmask(source.get("flags", []), flag_table)
+            cats_mask = encode_bitmask(source.get("categories", []), category_table)
             f.write(struct.pack("<I", flags_mask))
             f.write(struct.pack("<B", cats_mask))
 
