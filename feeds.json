@@ -527,6 +527,20 @@
         "categories": ["anonymizer"]
     },
     {
+        "name": "mullvad_static_asns",
+        "url": "",
+        "description": "Static Mullvad ASN list",
+        "regex": "",
+        "base_score": 0.5,
+        "confidence": 1.0,
+        "is_asn": true,
+        "asns": [
+            "216025"
+        ],
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
         "name": "cleantalk",
         "url": "https://iplists.firehol.org/files/cleantalk_updated.ipset",
         "description": "CleanTalk spam IPs",
@@ -1643,6 +1657,26 @@
         "confidence": 0.95,
         "flags": ["is_anycast"],
         "categories": ["infrastructure"]
+    },
+    {
+        "name": "icloud_private_relay_official",
+        "url": "https://mask-api.icloud.com/egress-ip-ranges.csv",
+        "description": "iCloud Private Relay - Official egress IP ranges (CSV)",
+        "regex": "^([0-9a-fA-F:.]+(?:/\\d+)?),",
+        "base_score": 0.4,
+        "confidence": 0.99,
+        "flags": ["is_vpn", "is_proxy", "is_cdn"],
+        "categories": ["anonymizer", "infrastructure"]
+    },
+    {
+        "name": "icloud_private_relay_community",
+        "url": "https://raw.githubusercontent.com/hroost/icloud-private-relay-iplist/refs/heads/main/ip-ranges.txt",
+        "description": "iCloud Private Relay - Community-maintained IP list",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.4,
+        "confidence": 0.9,
+        "flags": ["is_vpn", "is_proxy", "is_cdn"],
+        "categories": ["anonymizer", "infrastructure"]
     },
     {
         "name": "proxy_pub",
