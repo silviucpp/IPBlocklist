@@ -6,7 +6,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 1.0,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -56,7 +56,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.6,
         "confidence": 0.85,
-        "flags": ["is_web_attacker"],
+        "flags": ["is_scanner"],
         "categories": ["attacks"]
     },
     {
@@ -136,7 +136,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.75,
         "confidence": 0.85,
-        "flags": ["is_web_attacker"],
+        "flags": ["is_scanner"],
         "categories": ["attacks"]
     },
     {
@@ -226,7 +226,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.92,
         "confidence": 0.9,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -246,7 +246,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.65,
         "confidence": 0.8,
-        "flags": ["is_spammer", "is_forum_spammer"],
+        "flags": ["is_spammer"],
         "categories": ["spam"]
     },
     {
@@ -316,7 +316,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.75,
         "confidence": 0.85,
-        "flags": ["is_web_attacker"],
+        "flags": ["is_scanner"],
         "categories": ["attacks"]
     },
     {
@@ -406,7 +406,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 1.0,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -553,7 +553,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.75,
         "confidence": 0.85,
-        "flags": ["is_web_attacker"],
+        "flags": ["is_scanner"],
         "categories": ["attacks"]
     },
     {
@@ -573,7 +573,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.85,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -593,7 +593,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.92,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -647,16 +647,6 @@
         "categories": ["attacks"]
     },
     {
-        "name": "hphosts_ats",
-        "url": "https://iplists.firehol.org/files/hphosts_ats.ipset",
-        "description": "hpHosts ad/tracking servers",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.25,
-        "confidence": 0.7,
-        "flags": [],
-        "categories": []
-    },
-    {
         "name": "hphosts_emd",
         "url": "https://iplists.firehol.org/files/hphosts_emd.ipset",
         "description": "hpHosts malware sites",
@@ -703,7 +693,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.85,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -713,7 +703,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.85,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -723,7 +713,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.85,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -821,7 +811,7 @@
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_hosting.txt",
         "description": "OXL risk-db-lists hosting ASNs",
         "regex": "^(?:AS)?([0-9]+)$",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.95,
         "is_asn": true,
         "flags": ["is_datacenter"],
@@ -832,10 +822,10 @@
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_crawler.txt",
         "description": "OXL risk-db-lists crawler networks",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_web_attacker"],
-        "categories": []
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
     },
     {
         "name": "riskdb_lists_net_hosting",
@@ -872,10 +862,10 @@
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_crawler.txt",
         "description": "OXL risk-db-lists crawler IPs",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_crawler"],
-        "categories": []
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
     },
     {
         "name": "riskdb_lists_ip_hosting",
@@ -932,18 +922,18 @@
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_crawler.txt",
         "description": "OXL risk-db-lists crawler ASNs",
         "regex": "^(?:AS)?([0-9]+)$",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.95,
         "is_asn": true,
-        "flags": ["is_crawler"],
-        "categories": []
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
     },
     {
         "name": "riskdb_lists_asn_vpn",
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_vpn.txt",
         "description": "OXL risk-db-lists VPN ASNs",
         "regex": "^(?:AS)?([0-9]+)$",
-        "base_score": 0.0,
+        "base_score": 0.5,
         "confidence": 0.95,
         "is_asn": true,
         "flags": ["is_vpn"],
@@ -954,7 +944,7 @@
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/asn/kind_scanner.txt",
         "description": "OXL risk-db-lists scanner ASNs",
         "regex": "^(?:AS)?([0-9]+)$",
-        "base_score": 0.0,
+        "base_score": 0.75,
         "confidence": 0.95,
         "is_asn": true,
         "flags": ["is_scanner"],
@@ -1003,36 +993,6 @@
         "categories": ["infrastructure"]
     },
     {
-        "name": "riskdb_lists_net_dynamic",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/kind_dynamic.txt",
-        "description": "OXL risk-db-lists dynamic networks",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.0,
-        "confidence": 0.95,
-        "flags": ["is_datacenter"],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "riskdb_lists_net_top_10000_ips_4",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/top_10000_ips_4.txt",
-        "description": "OXL risk-db-lists top 10000 IPv4 reputation networks",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.6,
-        "confidence": 0.8,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
-    },
-    {
-        "name": "riskdb_lists_net_top_10000_ips_6",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/net/top_10000_ips_6.txt",
-        "description": "OXL risk-db-lists top 10000 IPv6 reputation networks",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.6,
-        "confidence": 0.8,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
-    },
-    {
         "name": "riskdb_lists_ip_isp",
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_isp.txt",
         "description": "OXL risk-db-lists ISP IPs",
@@ -1053,16 +1013,6 @@
         "categories": ["infrastructure"]
     },
     {
-        "name": "riskdb_lists_ip_dynamic",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_dynamic.txt",
-        "description": "OXL risk-db-lists dynamic IPs",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.0,
-        "confidence": 0.95,
-        "flags": ["is_datacenter"],
-        "categories": ["infrastructure"]
-    },
-    {
         "name": "riskdb_lists_ip_maybe_hacked",
         "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_maybe_hacked.txt",
         "description": "OXL risk-db-lists maybe hacked IPs",
@@ -1073,46 +1023,14 @@
         "categories": ["compromised"]
     },
     {
-        "name": "riskdb_lists_ip_top_100000",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/top_100000.txt",
-        "description": "OXL risk-db-lists top 100000 reported IPs",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.65,
-        "confidence": 0.8,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
-    },
-    {
         "name": "datacenter_asns",
         "url": "https://raw.githubusercontent.com/brianhama/bad-asn-list/refs/heads/master/bad-asn-list.csv",
         "description": "Datacenter ASN ranges",
         "regex": "(?:^|\\b)AS([0-9]+)\\b|^\"?([0-9]+)\"?(?=,)",
-        "base_score": 0.0,
+        "base_score": 0.5,
         "confidence": 0.85,
         "is_asn": true,
         "flags": ["is_datacenter"],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_personal_asns",
-        "url": "https://bgp.tools/tags/perso",
-        "description": "BGP.tools Personal ASN tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": []
-    },
-    {
-        "name": "bgptools_dsl_asns",
-        "url": "https://bgp.tools/tags/dsl",
-        "description": "BGP.tools Home ISP tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": ["is_isp"],
         "categories": ["infrastructure"]
     },
     {
@@ -1120,22 +1038,11 @@
         "url": "https://bgp.tools/tags/cdn",
         "description": "BGP.tools Content Delivery Network tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.0,
+        "base_score": 0.5,
         "confidence": 0.9,
         "is_asn": true,
-        "flags": ["is_cdn", "is_datacenter"],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_top10k_asns",
-        "url": "https://bgp.tools/tags/a10k",
-        "description": "BGP.tools Tranco 10k Host tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": []
     },
     {
         "name": "bgptools_vpn_asns",
@@ -1149,17 +1056,6 @@
         "categories": ["anonymizer"]
     },
     {
-        "name": "bgptools_critical_infra_asns",
-        "url": "https://bgp.tools/tags/icrit",
-        "description": "BGP.tools Internet Critical Infra tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": ["infrastructure"]
-    },
-    {
         "name": "bgptools_tor_asns",
         "url": "https://bgp.tools/tags/tor",
         "description": "BGP.tools Tor services tag",
@@ -1169,50 +1065,6 @@
         "is_asn": true,
         "flags": ["is_tor"],
         "categories": ["anonymizer"]
-    },
-    {
-        "name": "bgptools_government_asns",
-        "url": "https://bgp.tools/tags/gov",
-        "description": "BGP.tools Government tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_academic_asns",
-        "url": "https://bgp.tools/tags/uni",
-        "description": "BGP.tools Academic tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_ipv6_only_asns",
-        "url": "https://bgp.tools/tags/jv6",
-        "description": "BGP.tools IPv6 only tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": []
-    },
-    {
-        "name": "bgptools_event_asns",
-        "url": "https://bgp.tools/tags/event",
-        "description": "BGP.tools Event tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": []
     },
     {
         "name": "bgptools_server_hosting_asns",
@@ -1233,7 +1085,7 @@
         "base_score": 1.0,
         "confidence": 0.95,
         "is_asn": true,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -1244,7 +1096,7 @@
         "base_score": 0.0,
         "confidence": 0.9,
         "is_asn": true,
-        "flags": [],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
     },
     {
@@ -1255,7 +1107,7 @@
         "base_score": 0.0,
         "confidence": 0.9,
         "is_asn": true,
-        "flags": ["is_mobile", "is_isp"],
+        "flags": ["is_mobile"],
         "categories": ["infrastructure"]
     },
     {
@@ -1263,10 +1115,10 @@
         "url": "https://bgp.tools/tags/biznet",
         "description": "BGP.tools Business Broadband tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.9,
         "is_asn": true,
-        "flags": ["is_isp"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1274,54 +1126,32 @@
         "url": "https://bgp.tools/tags/satnet",
         "description": "BGP.tools Satellite Internet tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.9,
         "is_asn": true,
         "flags": ["is_isp"],
         "categories": ["infrastructure"]
     },
     {
-        "name": "bgptools_direct_feed_asns",
-        "url": "https://bgp.tools/tags/feeder",
-        "description": "BGP.tools Direct Feed tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
-        "categories": []
-    },
-    {
         "name": "bgptools_corporate_asns",
         "url": "https://bgp.tools/tags/corp",
         "description": "BGP.tools Corporate and Enterprise tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.9,
         "is_asn": true,
-        "flags": [],
-        "categories": []
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
     },
     {
         "name": "bgptools_anycast_asns",
         "url": "https://bgp.tools/tags/anycast",
         "description": "BGP.tools Anycast tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.0,
+        "base_score": 0.35,
         "confidence": 0.9,
         "is_asn": true,
         "flags": ["is_anycast"],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_rpki_rov_asns",
-        "url": "https://bgp.tools/tags/rpkirov",
-        "description": "BGP.tools Validating RPKI ROV tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.0,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": [],
         "categories": ["infrastructure"]
     },
     {
@@ -1558,7 +1388,7 @@
         "regex": "^([0-9.]+/\\d+)",
         "base_score": 0.35,
         "confidence": 1.0,
-        "flags": ["is_datacenter", "is_cdn"],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
     },
     {
@@ -1568,7 +1398,7 @@
         "regex": "^([0-9a-fA-F:]+/\\d+)",
         "base_score": 0.35,
         "confidence": 1.0,
-        "flags": ["is_datacenter", "is_cdn"],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
     },
     {
@@ -1578,7 +1408,7 @@
         "regex": "\"ip_prefix\":\\s*\"([0-9.]+/\\d+)\"",
         "base_score": 0.35,
         "confidence": 1.0,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1588,7 +1418,7 @@
         "regex": "\"ipv4Prefix\":\\s*\"([0-9.]+/\\d+)\"",
         "base_score": 0.35,
         "confidence": 1.0,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1598,7 +1428,7 @@
         "regex": "^([0-9.]+/\\d+)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1608,7 +1438,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 1.0,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -1618,7 +1448,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 1.0,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -1668,7 +1498,7 @@
         "regex": "^(?![#;/])([0-9.]+)",
         "base_score": 1.0,
         "confidence": 0.95,
-        "flags": ["is_malware", "is_botnet", "is_c2_server"],
+        "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
     },
     {
@@ -1698,7 +1528,7 @@
         "regex": "^([0-9.]+/\\d+)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1708,7 +1538,7 @@
         "regex": "\"cidr\":\\s*\"([0-9.]+/\\d+)\"",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1718,7 +1548,7 @@
         "regex": "^([0-9.]+/\\d+)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cdn"],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
     },
     {
@@ -1728,7 +1558,7 @@
         "regex": "\"([0-9.]+/\\d+)\"",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cdn"],
+        "flags": ["is_cdn"],
         "categories": ["infrastructure"]
     },
     {
@@ -1738,7 +1568,7 @@
         "regex": "^([0-9.]+/\\d+)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_datacenter", "is_cloud"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {

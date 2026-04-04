@@ -192,14 +192,11 @@ Common fields:
 `flags` are boolean indicators. Canonical values:
 
 - `is_anycast`
-- `is_botnet`
 - `is_brute_force`
 - `is_c2_server`
 - `is_cdn`
-- `is_cloud`
 - `is_compromised`
 - `is_datacenter`
-- `is_forum_spammer`
 - `is_isp`
 - `is_malware`
 - `is_mobile`
@@ -209,7 +206,6 @@ Common fields:
 - `is_spammer`
 - `is_tor`
 - `is_vpn`
-- `is_web_attacker`
 
 `categories` are scoring buckets. Supported values:
 
