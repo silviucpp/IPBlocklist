@@ -304,6 +304,92 @@ def download_proxy_types():
     return feeds
 
 
+def collect_string_table(sources, key):
+    seen = []
+    for source in sources:
+        for value in source.get(key, []):
+            if value not in seen:
+                seen.append(value)
+    return seen
+
+
+def encode_bitmask(values, table):
+    mask = 0
+    for value in values:
+        if value in table:
+            mask |= 1 << table.index(value)
+    return mask
+
+
+def write_blocklist_bin(processed, source_map):
+    all_sources = list(source_map.values())
+    flag_table = collect_string_table(all_sources, "flags")
+    category_table = collect_string_table(all_sources, "categories")
+
+    proxy_pub = source_map.get("proxy_pub", {})
+    proxy_defaults = {
+        "base_score": proxy_pub.get("base_score", 0.7),
+        "confidence": proxy_pub.get("confidence", 0.9),
+        "flags": proxy_pub.get("flags", ["is_proxy"]),
+        "categories": proxy_pub.get("categories", ["anonymizer"]),
+    }
+
+    with open("blocklist.bin", "wb") as f:
+        f.write(b"IPBL")
+        f.write(struct.pack("<B", 2))
+        f.write(struct.pack("<I", int(time.time())))
+
+        f.write(struct.pack("<B", len(flag_table)))
+        for flag in flag_table:
+            encoded = flag.encode("utf-8")
+            f.write(struct.pack("<B", len(encoded)))
+            f.write(encoded)
+
+        f.write(struct.pack("<B", len(category_table)))
+        for cat in category_table:
+            encoded = cat.encode("utf-8")
+            f.write(struct.pack("<B", len(encoded)))
+            f.write(encoded)
+
+        f.write(struct.pack("<H", len(processed)))
+
+        for feed_name, ranges in processed.items():
+            source = source_map.get(feed_name)
+            if source is None:
+                source = {
+                    "base_score": proxy_defaults["base_score"],
+                    "confidence": proxy_defaults["confidence"],
+                    "flags": proxy_defaults["flags"],
+                    "categories": proxy_defaults["categories"],
+                }
+
+            name_bytes = feed_name.encode("utf-8")
+            f.write(struct.pack("<B", len(name_bytes)))
+            f.write(name_bytes)
+
+            score = min(200, int(source.get("base_score", 0.5) * 200))
+            conf = min(200, int(source.get("confidence", 0.5) * 200))
+            f.write(struct.pack("<B", score))
+            f.write(struct.pack("<B", conf))
+
+            flags_mask = encode_bitmask(
+                source.get("flags", []), flag_table
+            )
+            cats_mask = encode_bitmask(
+                source.get("categories", []), category_table
+            )
+            f.write(struct.pack("<I", flags_mask))
+            f.write(struct.pack("<B", cats_mask))
+
+            f.write(struct.pack("<I", len(ranges)))
+
+            prev_from = 0
+            for start, end in ranges:
+                write_varint(f, start - prev_from)
+                write_varint(f, end - start)
+                prev_from = start
+
+
 def main():
     with open("feeds.json") as file:
         sources = json.load(file)
@@ -336,25 +422,8 @@ def main():
     proxy_feeds = download_proxy_types()
     processed.update(proxy_feeds)
 
-    with open("blocklist.bin", "wb") as f:
-        f.write(struct.pack("<I", int(time.time())))
-        f.write(struct.pack("<H", len(processed)))
-
-        for list_name, ranges in processed.items():
-            name_bytes = list_name.encode("utf-8")
-            f.write(struct.pack("<B", len(name_bytes)))
-            f.write(name_bytes)
-            f.write(struct.pack("<I", len(ranges)))
-
-            prev_from = 0
-            for start, end in ranges:
-                from_delta = start - prev_from
-                range_size = end - start
-
-                write_varint(f, from_delta)
-                write_varint(f, range_size)
-
-                prev_from = start
+    source_map = {s["name"]: s for s in sources}
+    write_blocklist_bin(processed, source_map)
 
     print(f"Saved blocklist.bin with {len(processed)} feeds")
 
