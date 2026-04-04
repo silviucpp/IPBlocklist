@@ -618,6 +618,8 @@
             const FEEDS_URL =
                 'https://raw.githubusercontent.com/tn3w/IPBlocklist/master/feeds.json';
             const ASNS_URL = './data/asns.json';
+            const CACHE_NAME = 'ipblocklist-v2';
+            const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
             let blocklist = null;
             let feedsMeta = null;
@@ -642,20 +644,106 @@
                 );
             }
 
-            async function fetchBinary(path) {
-                const response = await fetch(path);
-                if (!response.ok) {
-                    throw new Error(assetErrorMessage(path));
-                }
-                return response.arrayBuffer();
+            function formatBytes(n) {
+                return n >= 1048576
+                    ? `${(n / 1048576).toFixed(1)} MB`
+                    : `${(n / 1024).toFixed(0)} KB`;
             }
 
-            async function fetchJson(path, fallbackMessage) {
-                const response = await fetch(path);
-                if (!response.ok) {
-                    throw new Error(fallbackMessage || assetErrorMessage(path));
+            function formatSpeed(bps) {
+                return bps >= 1048576
+                    ? `${(bps / 1048576).toFixed(1)} MB/s`
+                    : `${(bps / 1024).toFixed(0)} KB/s`;
+            }
+
+            async function openCache() {
+                try {
+                    return await caches.open(CACHE_NAME);
+                } catch {
+                    return null;
                 }
-                return response.json();
+            }
+
+            async function fetchBinaryWithProgress(url, onProgress) {
+                const cache = await openCache();
+                if (cache) {
+                    const hit = await cache.match(url);
+                    if (hit) {
+                        const age =
+                            Date.now() - parseInt(hit.headers.get('x-cached-at') || '0', 10);
+                        if (age < CACHE_MAX_AGE) {
+                            onProgress(null, null, true, 0);
+                            return hit.arrayBuffer();
+                        }
+                        await cache.delete(url);
+                    }
+                }
+
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(assetErrorMessage(url));
+
+                const total = parseInt(response.headers.get('content-length') || '0', 10);
+                const reader = response.body.getReader();
+                const chunks = [];
+                let received = 0;
+                const t0 = Date.now();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    chunks.push(value);
+                    received += value.length;
+                    const speed = received / Math.max((Date.now() - t0) / 1000, 0.001);
+                    onProgress(received, total, false, speed);
+                }
+
+                const bytes = new Uint8Array(received);
+                let offset = 0;
+                for (const chunk of chunks) {
+                    bytes.set(chunk, offset);
+                    offset += chunk.length;
+                }
+
+                if (cache) {
+                    await cache.put(
+                        url,
+                        new Response(bytes.buffer, {
+                            headers: {
+                                'content-type': 'application/octet-stream',
+                                'x-cached-at': String(Date.now()),
+                            },
+                        })
+                    );
+                }
+
+                return bytes.buffer;
+            }
+
+            async function fetchJsonCached(url, fallbackMessage) {
+                const cache = await openCache();
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(fallbackMessage || assetErrorMessage(url));
+                    const data = await response.json();
+                    if (cache) {
+                        await cache.put(
+                            url,
+                            new Response(JSON.stringify(data), {
+                                headers: {
+                                    'content-type': 'application/json',
+                                    'x-cached-at': String(Date.now()),
+                                },
+                            })
+                        );
+                    }
+                    return data;
+                } catch (networkError) {
+                    if (cache) {
+                        const hit = await cache.match(url);
+                        if (hit) return hit.json();
+                    }
+                    throw networkError;
+                }
             }
 
             function readVarint(view, pos) {
@@ -1305,13 +1393,31 @@
 
             async function init() {
                 try {
-                    setStatus('loading', 'Loading blocklist data…');
+                    setStatus('loading', 'Loading blocklist…');
 
-                    const [buffer, loadedFeedsMeta, loadedAsnsData] = await Promise.all([
-                        fetchBinary(BLOCKLIST_URL),
-                        fetchJson(FEEDS_URL, 'Failed to load feeds metadata.'),
-                        fetchJson(ASNS_URL),
+                    const jsonPromise = Promise.all([
+                        fetchJsonCached(FEEDS_URL, 'Failed to load feeds metadata.'),
+                        fetchJsonCached(ASNS_URL),
                     ]);
+
+                    const buffer = await fetchBinaryWithProgress(
+                        BLOCKLIST_URL,
+                        (received, total, fromCache, speed) => {
+                            if (fromCache) {
+                                setStatus('loading', 'Loading blocklist from cache…');
+                                return;
+                            }
+                            const pct =
+                                total > 0 ? ` ${Math.round((received / total) * 100)}%` : '';
+                            const size =
+                                formatBytes(received) +
+                                (total > 0 ? ` / ${formatBytes(total)}` : '');
+                            const spd = speed > 0 ? ` · ${formatSpeed(speed)}` : '';
+                            setStatus('loading', `Downloading blocklist…${pct} (${size}${spd})`);
+                        }
+                    );
+
+                    const [loadedFeedsMeta, loadedAsnsData] = await jsonPromise;
 
                     setStatus('loading', 'Parsing blocklist…');
                     blocklist = parseBlocklist(buffer);
@@ -1327,7 +1433,7 @@
                     lookupBtn.disabled = false;
                     queryInput.focus();
                 } catch (error) {
-                    setStatus('error', `Failed to load: ${error.message}`);
+                    setStatus('error', error.message || 'Failed to load data');
                 }
             }
 
