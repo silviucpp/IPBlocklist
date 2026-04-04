@@ -5,17 +5,18 @@
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/tn3w/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
 <img src="https://img.shields.io/badge/feeds-176-blue?style=for-the-badge" alt="Feed Count">
-<img src="https://img.shields.io/badge/artifacts-3-green?style=for-the-badge" alt="Artifact Count">
+<img src="https://img.shields.io/badge/artifacts-4-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
 </div>
 
-IPBlocklist aggregates IP and ASN threat intelligence into three release
+IPBlocklist aggregates IP and ASN threat intelligence into four release
 artifacts:
 
 - `blocklist.bin`: compact binary data for application lookups
 - `blocklist.txt`: scored, CIDR-minimized text blocklist for firewalls
 - `asns.json`: normalized ASN lists keyed by feed name
+- `asn_prefixes.json`: cached ASN → announced prefixes
 
 The current dataset is built from 176 feeds and includes IPv4, IPv6, CIDR
 ranges, announced prefixes derived from ASN feeds, and proxy-type ranges from
@@ -161,6 +162,17 @@ JSON object keyed by feed name.
     "bgptools_c2_asns": ["14618"],
     "bgptools_tor_asns": ["60729", "53667"],
     "tor_static_asns": ["60729", "53667"]
+}
+```
+
+### `asn_prefixes.json`
+
+JSON object keyed by ASN.
+
+```json
+{
+    "16509": ["192.0.2.0/24", "198.51.100.0/24"],
+    "15169": ["203.0.113.0/24"]
 }
 ```
 
@@ -342,6 +354,19 @@ with open("asns.json") as file:
 
 tor_asns = set(asn_lists["bgptools_tor_asns"])
 print("60729" in tor_asns)
+```
+
+Read `asn_prefixes.json` in Python:
+
+```python
+import json
+
+with open("asn_prefixes.json") as file:
+    asn_prefixes = json.load(file)
+
+asn = "16509"
+prefixes = asn_prefixes.get(asn, [])
+print(f"ASN {asn} announces these prefixes: {prefixes}")
 ```
 
 Check whether an IP is covered by `blocklist.txt` in Python:

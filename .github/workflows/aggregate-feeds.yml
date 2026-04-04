@@ -50,12 +50,14 @@ jobs:
           - \`blocklist.bin\` - Threat intelligence data (binary format)
           - \`blocklist.txt\` - Scored and CIDR-minimized blocklist (text format)
           - \`asns.json\` - Normalized ASN lists keyed by feed name
+          - \`asn_prefixes.json\` - Cached ASN to announced prefixes mapping
 
           **Download:**
           \`\`\`bash
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.bin
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.txt
           wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/asns.json
+          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/asn_prefixes.json
           \`\`\`"
 
       - name: Clean up old releases
