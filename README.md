@@ -2,7 +2,7 @@
 
 # 🔒 IPBlocklist
 
-Threat intelligence aggregator that collects, processes, and serves IP reputation data from 128 security feeds into an optimized binary format for fast lookups and a scored, CIDR-minimized text blocklist for direct use with firewalls.
+Threat intelligence aggregator that collects, processes, and serves IP reputation data from 149 security feeds into an optimized binary format for fast lookups and a scored, CIDR-minimized text blocklist for direct use with firewalls.
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/tn3w/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
@@ -22,7 +22,7 @@ Threat intelligence aggregator that collects, processes, and serves IP reputatio
 ## 🚀 Key Features
 
 - ✅ Fast IP lookups in <1ms using binary search
-- ✅ 5.0M+ IPs and CIDR ranges from 128 threat intelligence feeds
+- ✅ 5.0M+ IPs and CIDR ranges from 149 threat intelligence feeds
 - ✅ Malware C&C servers, botnets, spam networks, compromised hosts
 - ✅ VPN providers, Tor nodes, datacenter/hosting ASNs, public proxies
 - ✅ Optimized integer storage for minimal memory footprint
@@ -61,6 +61,14 @@ IPBlocklist downloads threat intelligence from multiple sources (malware C&C ser
 
 The system uses open-source security feeds configured in feeds.json, which are processed by aggregator.py into a unified blocklist.bin file.
 
+Feeds marked with `is_asn` extract ASN values, resolve them to announced
+prefixes through RIPEstat, and can optionally emit a normalized ASN JSON
+artifact such as `datacenter_asns.json`.
+
+Non-malicious ASN category feeds can use a `base_score` of `0.0` so they
+still annotate lookups in `blocklist.bin` without contributing to the scored
+`blocklist.txt` output.
+
 ## 📁 Data Models
 
 ### feeds.json
@@ -98,6 +106,8 @@ Configuration file defining all threat intelligence sources. Each feed is an ind
 **Optional Fields**:
 
 - `provider_name`: VPN/hosting provider name
+- `is_asn`: Resolve extracted ASN values to announced IP prefixes via RIPEstat
+- `asn_output_path`: Optional JSON artifact path for normalized ASN values
 
 ### blocklist.bin
 
@@ -188,7 +198,7 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 - Parallel downloads with ThreadPoolExecutor (10 workers)
 - IPv4/IPv6 support with embedded address extraction
 - CIDR range expansion to [start, end] pairs
-- ASN-to-prefix expansion for the `datacenter_asns` feed via RIPEstat
+- ASN-to-prefix expansion for feeds marked with `is_asn`
 - Deduplication and sorting for binary search
 - Regex-based parsing for diverse feed formats
 - Proxy type integration from IP2X binary data
@@ -197,7 +207,7 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 
 **Special Handling**:
 
-- `datacenter_asns`: Resolves ASN numbers to IP ranges via RIPE API
+- Feeds with `is_asn`: Resolve ASN numbers to announced IP prefixes via RIPEstat
 - `proxy_types.bin`: Downloads pre-built proxy type ranges from [IP2X](https://github.com/tn3w/IP2X) (proxy types: PUB)
 - IPv6 mapped addresses: Extracts embedded IPv4 (::ffff:192.0.2.1)
 - 6to4 tunnels: Extracts IPv4 from 2002::/16 addresses
@@ -208,11 +218,13 @@ Downloads and processes all feeds in parallel, handling multiple formats and edg
 python aggregator.py
 ```
 
-**Output**: Creates/updates `blocklist.bin`, `blocklist.txt`, and `datacenter_asns.json`
+**Output**: Creates/updates `blocklist.bin`, `blocklist.txt`, and any
+configured ASN JSON artifacts
 
 `datacenter_asns.json` stores the normalized ASN values from the
-`datacenter_asns` feed. Those ASNs are also expanded into announced prefixes
-through the RIPEstat API and included in both blocklist outputs.
+`datacenter_asns` feed because that source sets `asn_output_path`. Those ASNs
+are also expanded into announced prefixes through the RIPEstat API and
+included in both blocklist outputs.
 
 ## 🐍 Python Lookup Examples
 
@@ -406,7 +418,7 @@ print(json.dumps(result, indent=2))
 
 **Dataset Statistics**:
 
-- Total feeds: 128
+- Total feeds: 149
 - Individual IPs: 4.4M (4.4M IPv4, 6k IPv6)
 - CIDR ranges: 552K (545K IPv4, 7K IPv6)
 - Proxy type ranges: 4.1M (from IP2X)
@@ -416,7 +428,7 @@ print(json.dumps(result, indent=2))
 **Lookup Complexity**:
 
 - Binary search: O(log n) per feed
-- Typical lookup: <1ms for 128 feeds with 9.1M entries
+- Typical lookup: <1ms for 149 feeds with 9.1M entries
 
 **Memory Usage**:
 

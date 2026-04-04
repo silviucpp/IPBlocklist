@@ -34,9 +34,10 @@ def parse_line(line, regex):
 def is_expired_certificate_error(error):
     cert_error = getattr(error, "reason", error)
     return isinstance(cert_error, ssl.SSLCertVerificationError) and (
-        getattr(cert_error, "verify_code", None) == 10 or (
-        "certificate has expired"
-        in f"{getattr(cert_error, 'verify_message', '')} {cert_error}".lower()
+        getattr(cert_error, "verify_code", None) == 10
+        or (
+            "certificate has expired"
+            in f"{getattr(cert_error, 'verify_message', '')} {cert_error}".lower()
         )
     )
 
@@ -52,7 +53,9 @@ def urlopen_with_expired_cert_fallback(request, timeout):
         insecure_context = ssl.create_default_context()
         insecure_context.check_hostname = False
         insecure_context.verify_mode = ssl.CERT_NONE
-        return urllib.request.urlopen(request, timeout=timeout, context=insecure_context)
+        return urllib.request.urlopen(
+            request, timeout=timeout, context=insecure_context
+        )
 
 
 def download_source(url, timeout=30):
@@ -73,10 +76,14 @@ def download_source(url, timeout=30):
 
 
 def extract_feed_entries(source):
+    regex = source.get("regex")
+    if not regex:
+        return []
+
     entries = []
 
     for line in download_source(source["url"]):
-        entries.extend(parse_line(line, source["regex"]))
+        entries.extend(parse_line(line, regex))
 
     return entries
 
@@ -114,10 +121,7 @@ def lookup_asn_prefixes(asn):
                 prefixes = data.get("data", {}).get("prefixes", [])
                 return [prefix["prefix"] for prefix in prefixes if "prefix" in prefix]
         except Exception as error:
-            print(
-                f"Error retrieving AS{asn_num} "
-                f"(attempt {attempt}/3): {error}"
-            )
+            print(f"Error retrieving AS{asn_num} " f"(attempt {attempt}/3): {error}")
             if attempt < 3:
                 time.sleep(1)
 
@@ -125,14 +129,18 @@ def lookup_asn_prefixes(asn):
     return []
 
 
-def download_datacenter_asn_feed(source):
+def extract_normalized_asns(source):
     asns = []
     for asn in extract_feed_entries(source):
         normalized_asn = normalize_asn(asn)
         if normalized_asn is not None:
             asns.append(normalized_asn)
 
-    unique_asns = sorted(set(asns))
+    return sorted(set(asns))
+
+
+def download_asn_feed(source):
+    unique_asns = extract_normalized_asns(source)
     prefixes = []
 
     with ThreadPoolExecutor(max_workers=10) as executor:
@@ -148,7 +156,11 @@ def download_datacenter_asn_feed(source):
     return source["name"], prefixes, unique_asns
 
 
-def save_datacenter_asns(asns, path="datacenter_asns.json"):
+def save_asn_artifact(source, asns):
+    path = source.get("asn_output_path")
+    if not path:
+        return
+
     with open(path, "w") as file:
         json.dump(asns, file, indent=2)
         file.write("\n")
@@ -283,29 +295,23 @@ def main():
     with open("feeds.json") as file:
         sources = json.load(file)
 
-    datacenter_source = next(
-        (source for source in sources if source["name"] == "datacenter_asns"),
-        None,
-    )
+    asn_sources = [source for source in sources if source.get("is_asn")]
     direct_sources = [
-        source for source in sources if source["name"] != "datacenter_asns"
+        source for source in sources if source.get("regex") and not source.get("is_asn")
     ]
 
     print("Downloading feeds...")
     feeds = download_all_feeds(direct_sources)
 
-    datacenter_asns = []
-    if datacenter_source is not None:
-        print("Resolving datacenter ASN ranges...")
-        feed_name, prefixes, datacenter_asns = download_datacenter_asn_feed(
-            datacenter_source
-        )
+    for source in asn_sources:
+        print(f"Resolving ASN ranges for {source['name']}...")
+        feed_name, prefixes, asns = download_asn_feed(source)
         feeds[feed_name] = prefixes
+        save_asn_artifact(source, asns)
         print(
-            f"Resolved {len(datacenter_asns)} ASNs into {len(prefixes)} prefixes"
+            f"Resolved {len(asns)} ASNs into {len(prefixes)} prefixes for "
+            f"{feed_name}"
         )
-
-    save_datacenter_asns(datacenter_asns)
 
     print("Processing feeds...")
     processed = process_feeds(feeds)
