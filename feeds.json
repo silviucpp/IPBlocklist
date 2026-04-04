@@ -76,7 +76,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.55,
         "confidence": 1.0,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -86,7 +86,7 @@
         "regex": "\"(?:\\[)?([0-9a-fA-F:.]+)(?:\\])?:[0-9]+\"",
         "base_score": 0.38,
         "confidence": 1.0,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -563,7 +563,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.38,
         "confidence": 1.0,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -633,7 +633,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.38,
         "confidence": 1.0,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -733,7 +733,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.38,
         "confidence": 1.0,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -834,7 +834,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.0,
         "confidence": 0.95,
-        "flags": ["is_crawler"],
+        "flags": ["is_web_attacker"],
         "categories": []
     },
     {
@@ -924,7 +924,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.55,
         "confidence": 0.95,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -979,7 +979,7 @@
         "base_score": 0.0,
         "confidence": 0.95,
         "is_asn": true,
-        "flags": ["is_education"],
+        "flags": ["is_isp"],
         "categories": ["infrastructure"]
     },
     {
@@ -999,7 +999,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.0,
         "confidence": 0.95,
-        "flags": ["is_education"],
+        "flags": ["is_isp"],
         "categories": ["infrastructure"]
     },
     {
@@ -1009,7 +1009,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.0,
         "confidence": 0.95,
-        "flags": ["is_dynamic"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1049,7 +1049,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.0,
         "confidence": 0.95,
-        "flags": ["is_education"],
+        "flags": ["is_isp"],
         "categories": ["infrastructure"]
     },
     {
@@ -1059,7 +1059,7 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.0,
         "confidence": 0.95,
-        "flags": ["is_dynamic"],
+        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1167,7 +1167,7 @@
         "base_score": 0.55,
         "confidence": 0.95,
         "is_asn": true,
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -1358,7 +1358,7 @@
             "205235",
             "30893"
         ],
-        "flags": ["is_tor", "is_anonymizer"],
+        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
