@@ -1407,11 +1407,13 @@
                                 setStatus('loading', 'Loading blocklist from cache…');
                                 return;
                             }
-                            const pct =
-                                total > 0 ? ` ${Math.round((received / total) * 100)}%` : '';
+                            const knownTotal = total > 0 && received <= total;
+                            const pct = knownTotal
+                                ? ` ${Math.round((received / total) * 100)}%`
+                                : '';
                             const size =
                                 formatBytes(received) +
-                                (total > 0 ? ` / ${formatBytes(total)}` : '');
+                                (knownTotal ? ` / ${formatBytes(total)}` : '');
                             const spd = speed > 0 ? ` · ${formatSpeed(speed)}` : '';
                             setStatus('loading', `Downloading blocklist…${pct} (${size}${spd})`);
                         }
