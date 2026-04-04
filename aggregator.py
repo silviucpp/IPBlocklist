@@ -9,6 +9,15 @@ import struct
 import re
 import subprocess
 import os
+import random
+
+try:
+    from curl_cffi import requests as cffi_requests
+    _CFFI_AVAILABLE = True
+except ImportError:
+    _CFFI_AVAILABLE = False
+
+_CFFI_BROWSERS = ["chrome120", "chrome119", "chrome118", "edge99", "safari15_5"]
 
 
 def parse_ip(ip_str):
@@ -58,7 +67,30 @@ def urlopen_with_expired_cert_fallback(request, timeout):
         )
 
 
+def download_source_cffi(url, timeout=30):
+    for attempt in range(1, 4):
+        browser = random.choice(_CFFI_BROWSERS)
+        try:
+            response = cffi_requests.get(
+                url,
+                impersonate=browser,
+                headers={"Accept-Language": "en-US,en;q=0.9"},
+                timeout=timeout,
+            )
+            if response.status_code == 200:
+                return response.text.splitlines()
+            print(f"Error downloading {url} (attempt {attempt}/3): HTTP {response.status_code}")
+        except Exception as error:
+            print(f"Error downloading {url} (attempt {attempt}/3): {error}")
+        if attempt < 3:
+            time.sleep(2 ** attempt)
+    return []
+
+
 def download_source(url, timeout=30):
+    if _CFFI_AVAILABLE and "bgp.tools" in url:
+        return download_source_cffi(url, timeout)
+
     for attempt in range(1, 4):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
