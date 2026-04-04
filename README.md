@@ -330,7 +330,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 - [tn3w](https://github.com/tn3w)
 - [silviucpp](https://github.com/silviucpp)
 
-# AI Disclosure
+## AI Disclosure
 
 This project was developed with the assistance of AI tools, including GPT-5.4 and Claude Opus 4.6. These tools were used to help generate code, documentation, and other content. The human contributors provided guidance, review, and oversight throughout the development process to ensure the quality and accuracy of the final product. An example of AI-generated content is ./examples whch contains lookup implementations in multiple programming languages, created with the help of AI tools.
 
