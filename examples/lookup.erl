@@ -37,7 +37,14 @@ read_strings(<<Len:8, Name:Len/binary, Rest/binary>>, N, I, Acc) ->
     read_strings(Rest, N - 1, I + 1, Acc#{I => Name}).
 
 bits_to_list(Mask, Table) ->
-    maps:fold(fun(I, Name, Acc) -> case Mask band (1 bsl I) of 0 -> Acc; _ -> [Name | Acc] end end, [], Table).
+    maps:fold(fun(I, Name, Acc) ->
+        case Mask band (1 bsl I) of
+            0 ->
+                Acc;
+            _ ->
+                [Name | Acc]
+        end
+    end, [], Table).
 
 read_feeds(_, 0, _, _, Acc) ->
     {Acc, <<>>};
@@ -45,6 +52,8 @@ read_feeds(<<NLen:8, Name:NLen/binary, BS:8, CO:8, FM:32/little, CM:8, RC:32/lit
     {V4S, V4E, V6S, V6E, Rest2} = read_ranges(Rest, RC, 0, [], [], [], []),
     Feed = #{
         name => Name,
+        base_score => BS,
+        confidence => CO,
         score => (BS / 200.0) * (CO / 200.0),
         flags => bits_to_list(FM, Flags),
         categories => bits_to_list(CM, Cats),
@@ -115,7 +124,7 @@ bisect_right(Arr, Target, Lo, Hi) ->
     end.
 
 parse_ip(IPBin) ->
-    case catch inet:parse_address(binary_to_list(IPBin)) of
+    case inet:parse_address(binary_to_list(IPBin)) of
         {ok, {A, B, C, D}} ->
             {ok, v4, (A bsl 24) bor (B bsl 16) bor (C bsl 8) bor D};
         {ok, {A, B, C, D, E, F, G, H}} ->
