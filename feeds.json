@@ -1061,8 +1061,8 @@
         "url": "https://bgp.tools/tags/vpn",
         "description": "BGP.tools VPN Host tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.5,
-        "confidence": 0.9,
+        "base_score": 0.4,
+        "confidence": 0.6,
         "is_asn": true,
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -1072,8 +1072,8 @@
         "url": "https://bgp.tools/tags/tor",
         "description": "BGP.tools Tor services tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.55,
-        "confidence": 0.95,
+        "base_score": 0.3,
+        "confidence": 0.7,
         "is_asn": true,
         "flags": ["is_tor"],
         "categories": ["anonymizer"]
@@ -1094,8 +1094,8 @@
         "url": "https://bgp.tools/tags/c2s",
         "description": "BGP.tools Malware C2 tag",
         "regex": "AS([0-9]+)",
-        "base_score": 1.0,
-        "confidence": 0.95,
+        "base_score": 0.5,
+        "confidence": 0.45,
         "is_asn": true,
         "flags": ["is_c2_server"],
         "categories": ["malware", "botnet"]
@@ -1106,7 +1106,7 @@
         "description": "BGP.tools DDoS Mitigation tag",
         "regex": "AS([0-9]+)",
         "base_score": 0.0,
-        "confidence": 0.9,
+        "confidence": 0.65,
         "is_asn": true,
         "flags": ["is_cdn"],
         "categories": ["infrastructure"]
@@ -1120,17 +1120,6 @@
         "confidence": 0.9,
         "is_asn": true,
         "flags": ["is_mobile"],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_business_broadband_asns",
-        "url": "https://bgp.tools/tags/biznet",
-        "description": "BGP.tools Business Broadband tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.35,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
