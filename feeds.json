@@ -1068,17 +1068,6 @@
         "categories": ["anonymizer"]
     },
     {
-        "name": "bgptools_tor_asns",
-        "url": "https://bgp.tools/tags/tor",
-        "description": "BGP.tools Tor services tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.3,
-        "confidence": 0.7,
-        "is_asn": true,
-        "flags": ["is_tor"],
-        "categories": ["anonymizer"]
-    },
-    {
         "name": "bgptools_server_hosting_asns",
         "url": "https://bgp.tools/tags/vpsh",
         "description": "BGP.tools Server Hosting tag",
