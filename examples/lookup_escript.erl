@@ -107,8 +107,12 @@ do_lookup(Feeds, Target, Version) ->
         [] ->
             no_match;
         Matches ->
-            Fun = fun(#{name := Name, score := Score, flags := Fl, categories := Ca}) ->
-                #{name => Name, score => Score, flags => Fl, categories => Ca}
+            Fun = fun(#{name := Name, base_score := BS,
+                        confidence := CO, score := Score,
+                        flags := Fl, categories := Ca}) ->
+                #{name => Name, base_score => BS,
+                  confidence => CO, score => Score,
+                  flags => Fl, categories => Ca}
             end,
             lists:map(Fun, Matches)
     end.
@@ -149,3 +153,45 @@ parse_ip(IpBin) ->
         _ ->
             {error, invalid_ip}
     end.
+
+format_match(#{name := Name, score := Score,
+               flags := Fl, categories := Ca}) ->
+    Parts = [binary_to_list(Name),
+             io_lib:format("score=~.2f", [Score])]
+        ++ case Fl of
+            [] -> [];
+            _ -> ["flags=" ++ string:join(
+                [binary_to_list(F) || F <- Fl], ",")]
+        end
+        ++ case Ca of
+            [] -> [];
+            _ -> ["cats=" ++ string:join(
+                [binary_to_list(C) || C <- Ca], ",")]
+        end,
+    string:join(Parts, " | ").
+
+main(Args) when length(Args) < 1 ->
+    io:format(
+        "Usage: escript lookup.erl <ip> [<ip> ...]~n");
+main(Args) ->
+    Feeds = load("blocklist.bin"),
+    lists:foreach(
+        fun(IpStr) ->
+            IpBin = list_to_binary(IpStr),
+            case lookup(Feeds, IpBin) of
+                no_match ->
+                    io:format("~s: no matches~n",
+                        [IpStr]);
+                {error, invalid_ip} ->
+                    io:format("~s: invalid IP~n",
+                        [IpStr]);
+                Matches ->
+                    lists:foreach(
+                        fun(M) ->
+                            io:format("~s: ~s~n",
+                                [IpStr, format_match(M)])
+                        end,
+                        Matches)
+            end
+        end,
+        Args).
