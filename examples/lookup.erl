@@ -1,6 +1,3 @@
-#!/usr/bin/env escript
-%%! -mode(compile)
-
 -module(lookup).
 
 -export([
