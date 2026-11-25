@@ -15,13 +15,15 @@ from . import ranges as R
 # Feed level
 MAX_STALE_RUNS = 7  # reuse previous data for a failed/empty feed this many runs
 SHRINK_RATIO = 0.5  # fresh data smaller than this share of the previous run is suspicious
-SHRINK_GRACE_RUNS = 2  # after this many suspicious runs in a row, accept the smaller list
-SHRINK_MIN_ENTRIES = 50  # ignore shrinkage on tiny feeds
+GROWTH_RATIO = 3.0  # fresh data more than this many times the previous run is suspicious
+SHRINK_GRACE_RUNS = 2  # after this many suspicious runs in a row, accept the new size
+SHRINK_MIN_ENTRIES = 50  # ignore size changes on tiny feeds
 # Upstreams whose Last-Modified header is older than this are reported as stale
 UPSTREAM_STALE_DAYS = 180
 
 # Category level (guards against a broken run reaching consumers). Only shrinkage is
-# checked: growth is deliberate (new feeds), while a collapse means a broken download.
+# checked here: growth of a whole category is usually a new feed, and sudden growth
+# of a single feed is caught by the per-feed check above.
 CATEGORY_MIN_RATIO = 0.4  # fail if a category keeps less than 40% of its ranges
 CATEGORY_MIN_ENTRIES = 100
 MAX_FAILED_FEED_SHARE = 0.25  # fail if more than a quarter of the feeds produced nothing
@@ -56,13 +58,15 @@ def decide(fresh, error, previous, previous_state):
             return Decision(previous.v4, previous.v6, "stale", reason, stale_runs + 1)
         return Decision([], [], "failed", reason, stale_runs + 1)
 
-    if (
-        prev_entries >= SHRINK_MIN_ENTRIES
-        and fresh.entries < prev_entries * SHRINK_RATIO
-        and stale_runs < SHRINK_GRACE_RUNS
-    ):
-        reason = f"shrank from {prev_entries} to {fresh.entries} entries"
-        return Decision(previous.v4, previous.v6, "stale", reason, stale_runs + 1)
+    if prev_entries >= SHRINK_MIN_ENTRIES and stale_runs < SHRINK_GRACE_RUNS:
+        # A feed that changes size suddenly is usually a broken regex or upstream
+        # format change. Keep the old data for a couple of runs, then accept it.
+        if fresh.entries < prev_entries * SHRINK_RATIO:
+            reason = f"shrank from {prev_entries} to {fresh.entries} entries"
+            return Decision(previous.v4, previous.v6, "stale", reason, stale_runs + 1)
+        if fresh.entries > prev_entries * GROWTH_RATIO:
+            reason = f"grew from {prev_entries} to {fresh.entries} entries"
+            return Decision(previous.v4, previous.v6, "stale", reason, stale_runs + 1)
 
     return Decision(fresh.v4, fresh.v6, "ok")
 

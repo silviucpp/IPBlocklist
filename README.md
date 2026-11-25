@@ -94,8 +94,8 @@ without affecting `blocklist.txt`.
 
 - **Config validation.** `feeds.json` is checked for duplicate names, unknown keys, flags or categories, bad scores, regexes without a capture group and non-HTTPS URLs (opt in per feed with `allow_http`).
 - **Never-block filter.** Private, loopback, link-local, CGNAT, multicast, reserved and documentation ranges are removed from every feed; for IPv6 only `2000::/3` is kept. A single entry wider than `/8` (IPv4) or `/16` (IPv6) is dropped and counted as `too_broad`.
-- **Per-feed fallback.** A feed that fails to download, returns nothing, or shrinks by more than half reuses the previous release's data (up to 7 runs; shrinkage is accepted after 2 runs). This needs the last release: `python aggregator.py --previous prev --out data` with `blocklist.bin` and `manifest.json` in `prev/`.
-- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% of its previous range count. Growth is not limited, so adding feeds never needs `--force`. Override with `--force`.
+- **Per-feed fallback.** A feed that fails to download or returns nothing reuses the previous release's data (up to 7 runs). A feed whose size jumps (less than half or more than 3x its previous range count) also keeps the previous data, and the new size is accepted after 2 runs. A feed with no previous data is accepted at any size. This needs the last release: `python aggregator.py --previous prev --out data` with `blocklist.bin` and `manifest.json` in `prev/`.
+- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% of its previous range count. Category growth is not limited, so adding feeds never needs `--force`. Override with `--force`.
 - **Manifest.** `manifest.json` records per-feed status, range counts, upstream `Last-Modified` age (feeds unchanged for over 180 days are flagged) and SHA-256 of every output file.
 - **ASN lookups.** Failed RIPEstat lookups are never cached.
 

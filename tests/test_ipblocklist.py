@@ -215,6 +215,16 @@ class ReconcileTests(unittest.TestCase):
         self.assertEqual(decide(self.fresh(10), None, self.previous(), {}).status, "stale")
         self.assertEqual(decide(self.fresh(10), None, self.previous(), {"stale_runs": 2}).status, "ok")
 
+    def test_growth_then_accept(self):
+        self.assertEqual(decide(self.fresh(400), None, self.previous(), {}).status, "stale")
+        self.assertEqual(decide(self.fresh(400), None, self.previous(), {"stale_runs": 2}).status, "ok")
+
+    def test_moderate_growth_is_accepted(self):
+        self.assertEqual(decide(self.fresh(250), None, self.previous(), {}).status, "ok")
+
+    def test_new_feed_may_be_any_size(self):
+        self.assertEqual(decide(self.fresh(400000), None, None, {}).status, "ok")
+
     def test_no_previous_and_empty_fails(self):
         self.assertEqual(decide(ParsedFeed(), None, None, {}).status, "failed")
 
