@@ -1368,5 +1368,1985 @@
         "confidence": 1.0,
         "flags": ["is_scanner"],
         "categories": ["attacks"]
+    },
+    {
+        "name": "honeypot_dictionary",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/php_dictionary_30d.ipset",
+        "description": "honeypot dictionary (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "cps_cobaltstrike",
+        "url": "https://raw.githubusercontent.com/CriticalPathSecurity/Public-Intelligence-Feeds/master/cobaltstrike_ips.txt",
+        "description": "cps cobaltstrike (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 1.0,
+        "confidence": 0.95,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "cybercrime_tracker",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/cybercrime.ipset",
+        "description": "cybercrime tracker (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 1.0,
+        "confidence": 0.95,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "drb_ra_c2",
+        "url": "https://raw.githubusercontent.com/drb-ra/C2IntelFeeds/master/feeds/IPC2s-30day.csv",
+        "description": "drb ra c2 (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 1.0,
+        "confidence": 0.98,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "shadowwhisperer_botnet",
+        "url": "https://raw.githubusercontent.com/ShadowWhisperer/IPs/master/Lists/Threats.csv",
+        "description": "shadowwhisperer botnet (iplore)",
+        "regex": "^([^,]+),botnet",
+        "base_score": 1.0,
+        "confidence": 0.98,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "akamai_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/akamai/akamai_ips_merged.txt",
+        "description": "Akamai (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cdn77",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cdn77/list.json",
+        "description": "CDN77 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "gocache_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/gocache/gocache_ips_merged.txt",
+        "description": "GoCache (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "imagekit",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/imagekit.ips",
+        "description": "ImageKit (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "imgix",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/imgix.ips",
+        "description": "imgix (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "netflix_geofeed",
+        "url": "https://raw.githubusercontent.com/Netflix/nflx-geofeed/main/geofeed.csv",
+        "description": "Netflix Open Connect (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stormwall_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/stormwall/stormwall_ips_merged.txt",
+        "description": "StormWall (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "sucuri_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/sucuri/sucuri_ips_merged.txt",
+        "description": "Sucuri (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "a10networks_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/a10networks-scanning/list.json",
+        "description": "A10 Networks - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "academyforinternetresearch_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/academyforinternetresearch-scanning/list.json",
+        "description": "Academy for Internet Research - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "adscore_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/adscore-scanning/list.json",
+        "description": "Adscore - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "alphastrike_research_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/alphastrike-research-nt-scanning/list.json",
+        "description": "AlphaStrike - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "alphastrike_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/alphastrike-scanning/list.json",
+        "description": "AlphaStrike - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "baidu_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/baidu/baidu_ips_merged.txt",
+        "description": "Baidu (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "binaryedge_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/binaryedge-scanning/list.json",
+        "description": "BinaryEdge - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "bitsight_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/bitsight-scanning/list.json",
+        "description": "BitSight - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "bufferoverrun_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/bufferoverrun-scanning/list.json",
+        "description": "BufferOver.run - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "censys_misp_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/censys-scanning/list.json",
+        "description": "Censys - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "censys_scanner",
+        "url": "https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/.cron/sources/SOURCE.censys.ipv4",
+        "description": "Censys - research scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "circl_security_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/circl-security-scanning/list.json",
+        "description": "CIRCL - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "circl_ssh_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/circl-ssh-scanning/list.json",
+        "description": "CIRCL - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "coalition_signals_intelligence_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/coalition-signals-intelligence-nt-scanning/list.json",
+        "description": "Coalition - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "criminalip_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/criminalip-scanning/list.json",
+        "description": "Criminal IP - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "crowdstrikefalconsurface_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/crowdstrikefalconsurface-scanning/list.json",
+        "description": "CrowdStrike - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cybcube_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cybcube-scanning/list.json",
+        "description": "CybCube - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cybergreen_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cybergreen-scanning/list.json",
+        "description": "CyberGreen - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cyberok_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cyberok-scanning/list.json",
+        "description": "CyberOK - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cyberresilience_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cyberresilience-scanning/list.json",
+        "description": "CyberResilience - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cypex_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cypex-scanning/list.json",
+        "description": "Cypex - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "dataplane_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/dataplane-scanning/list.json",
+        "description": "DataPlane - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "deepfield_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/deepfield-scanning/list.json",
+        "description": "Deepfield - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "detectify_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/detectify-scanning/list.json",
+        "description": "Detectify - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "driftnet_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/driftnet/list.json",
+        "description": "Driftnet - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "duckassistbot",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/duckassistbot/ipv4.txt",
+        "description": "DuckAssistBot (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "edgewatch_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/edgewatch-scanning/list.json",
+        "description": "EdgeWatch - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "eset_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/eset-scanning/list.json",
+        "description": "ESET - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "f6_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/f6-nt-scanning/list.json",
+        "description": "F6 - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "fofa_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/fofa-scanning/list.json",
+        "description": "FOFA - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "groupib_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/groupib-scanning/list.json",
+        "description": "Group-IB - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hackertarget_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/hackertarget-scanning/list.json",
+        "description": "HackerTarget - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hadrian_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/hadrian-scanning/list.json",
+        "description": "Hadrian - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hunter_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/hunter-scanning/list.json",
+        "description": "Hunter - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "infrawatch_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/infrawatch-scanning/list.json",
+        "description": "InfraWatch - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internet_census_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internet-census-nt-scanning/list.json",
+        "description": "Internet Census - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internetarchive_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/internetarchive/internetarchive_ips_merged.txt",
+        "description": "Internet Archive (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internetcleanup_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internetcleanup-scanner/list.json",
+        "description": "Internet Cleanup Foundation - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internetmeasurementresearch_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internetmeasurementresearch-scanning/list.json",
+        "description": "Internet Measurement Research - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internetmetrics_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internetmetrics-scanning/list.json",
+        "description": "Internet Metrics - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internetresearchproject_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internetresearchproject-scanning/list.json",
+        "description": "Internet Research Project - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "internettl_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/internettl-scanning/list.json",
+        "description": "InternetTL - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "intrinsec_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/intrinsec-scanning/list.json",
+        "description": "Intrinsec - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "intruder_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/intruder-scanning/list.json",
+        "description": "Intruder - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ipinfo_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/ipinfo-scanning/list.json",
+        "description": "IPinfo - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ipip_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/ipip-scanning/list.json",
+        "description": "IPIP - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ki3_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/ki3-scanning/list.json",
+        "description": "KI3 - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "knoq_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/knoq-scanning/list.json",
+        "description": "Knoq - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "leakix_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/leakix-scanning/list.json",
+        "description": "LeakIX - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "mandiantasm_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/mandiantasm-scanning/list.json",
+        "description": "Mandiant - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "marginalia",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/marginalia.ips",
+        "description": "Marginalia (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "modat_misp_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/modat-scanner/list.json",
+        "description": "Modat - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "netlas_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/netlas-scanning/list.json",
+        "description": "Netlas - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "netscout_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/netscout-scanning/list.json",
+        "description": "NETSCOUT - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "netsecscan_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/netsecscan-scanning/list.json",
+        "description": "NetSecScan - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "odin_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/odin-scanning/list.json",
+        "description": "Odin - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "onlyscans_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/onlyscans-scanning/list.json",
+        "description": "OnlyScans - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "onyphe_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/onyphe-scanner/list.json",
+        "description": "ONYPHE - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "palo_alto_networks_cortex_xpanse_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/palo-alto-networks-cortex-xpanse/list.json",
+        "description": "Palo Alto Networks - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "palo_scanner",
+        "url": "https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/.cron/sources/SOURCE.paloaltonetworks.ipv4",
+        "description": "Palo Alto Networks - research scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "pocnroll_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/pocnroll-scanning/list.json",
+        "description": "PoC n Roll - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "probethenet_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/probethenet-scanning/list.json",
+        "description": "ProbeTheNet - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "quake_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/quake-scanning/list.json",
+        "description": "Quake - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "rapid7_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/rapid7-scanning/list.json",
+        "description": "Rapid7 - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "recordedfuture_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/recordedfuture-scanning/list.json",
+        "description": "Recorded Future - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "recyber_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/recyber-scanning/list.json",
+        "description": "ReCyber - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "researchscanner_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/researchscanner-scanning/list.json",
+        "description": "Research Scanner - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "rootevidence_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/rootevidence-scanning/list.json",
+        "description": "RootEvidence - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "securityresearch_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/securityresearch-scanning/list.json",
+        "description": "Security Research - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "shadowforce_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/shadowforce-scanning/list.json",
+        "description": "Shadowforce - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "shadowserver_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/shadowserver/list.json",
+        "description": "Shadowserver - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "shadowwhisperer_scanners",
+        "url": "https://raw.githubusercontent.com/ShadowWhisperer/IPs/master/Lists/Scanners.csv",
+        "description": "shadowwhisperer scanners - research scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "shodan_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/shodan-scanning/list.json",
+        "description": "Shodan - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "skipa_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/skipa-nt-scanning/list.json",
+        "description": "Skipa - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "sonar_scanner",
+        "url": "https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/.cron/sources/SOURCE.project-sonar.ipv4",
+        "description": "Rapid7 - research scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stretchoid_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/stretchoid-scanning/list.json",
+        "description": "Stretchoid - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tenableasm_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/tenableasm-scanning/list.json",
+        "description": "Tenable - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "umich_cse_connection_attempts_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/umich-cse-connection-attempts/list.json",
+        "description": "University of Michigan - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "university_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/university-scanning/list.json",
+        "description": "University research - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "visionheight_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/visionheight-scanning/list.json",
+        "description": "VisionHeight - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "xmco_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/xmco-scanning/list.json",
+        "description": "XMCO - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "zern_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/zern-scanning/list.json",
+        "description": "Zern - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.8,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "zoomeye_scanner",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/zoomeye-scanning/list.json",
+        "description": "ZoomEye - research scanner (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "alibaba_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/alibaba/alibaba_ips_merged.txt",
+        "description": "Alibaba Cloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "azure_v4",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/microsoft/ipv4.txt",
+        "description": "Microsoft Azure (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "azure_v6",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/microsoft/ipv6.txt",
+        "description": "Microsoft Azure (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "backblaze_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/backblaze/backblaze_ips_merged.txt",
+        "description": "Backblaze (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "checkpoint_sase",
+        "url": "https://raw.githubusercontent.com/ShadowWhisperer/IPs/master/Lists/Tunnels.csv",
+        "description": "Check Point (iplore)",
+        "regex": "(?i)^([^,]+),check ?point",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "circleci_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/circleci/circleci_ips_merged.txt",
+        "description": "CircleCI (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "civo_geofeed",
+        "url": "https://raw.githubusercontent.com/civo/geofeed/master/civo-geofeed.csv",
+        "description": "Civo (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "contabo_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/contabo/contabo_ips_merged.txt",
+        "description": "Contabo (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "coreweave",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/coreweave/list.json",
+        "description": "CoreWeave (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "datacenter_v4",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/datacenter-ipv4/list.json",
+        "description": "datacenter v4 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "datacenter_v6",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/datacenter-ipv6/list.json",
+        "description": "datacenter v6 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "discord_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/discord/discord_ips_merged.txt",
+        "description": "Discord (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "gabia_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/gabia/gabia_ips_merged.txt",
+        "description": "Gabia (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "godaddy",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/godaddy/list.json",
+        "description": "GoDaddy (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hetzner_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/hetzner/hetzner_ips_merged.txt",
+        "description": "Hetzner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hostinger",
+        "url": "https://raw.githubusercontent.com/hostinger/geofeed/main/geofeed.csv",
+        "description": "Hostinger (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hostway_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/hostway/hostway_ips_merged.txt",
+        "description": "Hostway (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "huawei_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/huawei/huawei_ips_merged.txt",
+        "description": "Huawei Cloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ibm_cloud",
+        "url": "https://raw.githubusercontent.com/dprosper/cidr-calculator/main/data/datacenters.json",
+        "description": "IBM Cloud (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ipcat_datacenters",
+        "url": "https://raw.githubusercontent.com/growlfm/ipcat/main/datacenters.csv",
+        "description": "ipcat datacenters (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "is_vpn_v4",
+        "url": "https://raw.githubusercontent.com/josephrocca/is-vpn/main/vpn-or-datacenter-ipv4-ranges.txt",
+        "description": "is vpn v4 (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "is_vpn_v6",
+        "url": "https://raw.githubusercontent.com/josephrocca/is-vpn/main/vpn-or-datacenter-ipv6-ranges.txt",
+        "description": "is vpn v6 (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "jhassine_datacenters",
+        "url": "https://raw.githubusercontent.com/jhassine/server-ip-addresses/master/data/datacenters.txt",
+        "description": "jhassine datacenters (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "leaseweb_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/leaseweb/leaseweb_ips_merged.txt",
+        "description": "Leaseweb (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "linode_v4",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/linode/ipv4.txt",
+        "description": "Akamai Linode (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "linode_v6",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/linode/ipv6.txt",
+        "description": "Akamai Linode (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "meta",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/facebook/ipv4.txt",
+        "description": "Meta (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "meta_v6",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/facebook/ipv6.txt",
+        "description": "Meta (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "microsoft_azure_china",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/microsoft-azure-china/list.json",
+        "description": "Microsoft Azure (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "microsoft_azure_us_gov",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/microsoft-azure-us-gov/list.json",
+        "description": "Microsoft Azure (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "nhncloud_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/nhncloud/nhncloud_ips_merged.txt",
+        "description": "NHN Cloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ovhcloud_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/ovhcloud/ovhcloud_ips_merged.txt",
+        "description": "OVHcloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "palo_alto_networks_cortex_cloud",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/palo-alto-networks-cortex-cloud/list.json",
+        "description": "Palo Alto Networks (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "play2go_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/play2go/play2go_ips_merged.txt",
+        "description": "Play2Go (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "rackspace_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/rackspace/rackspace_ips_merged.txt",
+        "description": "Rackspace (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "scaleway_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/scaleway/scaleway_ips_merged.txt",
+        "description": "Scaleway (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stackit_geofeed",
+        "url": "https://raw.githubusercontent.com/SchwarzIT/geofeeds/main/geofeed.csv",
+        "description": "STACKIT (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "teamcity_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/teamcity/teamcity_ips_merged.txt",
+        "description": "JetBrains TeamCity (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tenable_cloud_ipv4",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/tenable-cloud-ipv4/list.json",
+        "description": "Tenable (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tenable_cloud_ipv6",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/tenable-cloud-ipv6/list.json",
+        "description": "Tenable (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tencent_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/tencent/tencent_ips_merged.txt",
+        "description": "Tencent Cloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "twitter",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/twitter/ipv4.txt",
+        "description": "X (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "twitter_v6",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/twitter/ipv6.txt",
+        "description": "X (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "vultr_v6",
+        "url": "https://raw.githubusercontent.com/lord-alfred/ipranges/main/vultr/ipv6.txt",
+        "description": "Vultr (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "wasabi_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/wasabi/wasabi_ips_merged.txt",
+        "description": "Wasabi (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "wikimedia",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/wikimedia/list.json",
+        "description": "Wikimedia (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "x4bnet_datacenter_v6",
+        "url": "https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/datacenter/ipv6.txt",
+        "description": "x4bnet datacenter v6 (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.85,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "zoho_ranges",
+        "url": "https://raw.githubusercontent.com/rezmoss/cloud-provider-ip-addresses/main/zoho/zoho_ips_merged.txt",
+        "description": "Zoho (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "betteruptimebot",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/betteruptimebot.ips",
+        "description": "Better Uptime (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "check_host_net",
+        "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/check-host-net/list.json",
+        "description": "Check-Host (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "freshpingbot",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/freshpingbot.ips",
+        "description": "Freshping (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "molliewebhook",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/molliewebhook.ips",
+        "description": "Mollie (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "rssapi",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/rssapi.ips",
+        "description": "RSS API (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "webpagetestbot",
+        "url": "https://raw.githubusercontent.com/AnTheMaker/GoodBots/main/iplists/webpagetestbot.ips",
+        "description": "WebPageTest (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tmobile_us_geofeed",
+        "url": "https://raw.githubusercontent.com/tmobile/tmus-geofeed/main/tmus-geo-ip.txt",
+        "description": "T-Mobile US (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.9,
+        "flags": ["is_mobile"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "phishing_active",
+        "url": "https://raw.githubusercontent.com/Phishing-Database/Phishing.Database/master/phishing-IPs-ACTIVE.txt",
+        "description": "phishing active (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.4,
+        "confidence": 0.9,
+        "flags": ["is_phishing"],
+        "categories": ["malware"]
+    },
+    {
+        "name": "clarketm_proxy",
+        "url": "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt",
+        "description": "clarketm proxy (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "dpangestuw_http",
+        "url": "https://raw.githubusercontent.com/dpangestuw/Free-Proxy/main/http_proxies.txt",
+        "description": "dpangestuw http (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d+)?)(?![0-9.])",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "dpangestuw_socks5",
+        "url": "https://raw.githubusercontent.com/dpangestuw/Free-Proxy/main/socks5_proxies.txt",
+        "description": "dpangestuw socks5 (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d+)?)(?![0-9.])",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "hideip_me",
+        "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/connect.txt",
+        "description": "hideip me (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "iplocate_proxies",
+        "url": "https://raw.githubusercontent.com/iplocate/free-proxy-list/main/all-proxies.txt",
+        "description": "iplocate proxies (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d+)?)(?![0-9.])",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "mmpx12_proxy",
+        "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/proxies.txt",
+        "description": "mmpx12 proxy (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d+)?)(?![0-9.])",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "r00tee_https",
+        "url": "https://raw.githubusercontent.com/r00tee/Proxy-List/main/Https.txt",
+        "description": "r00tee https (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "r00tee_socks5",
+        "url": "https://raw.githubusercontent.com/r00tee/Proxy-List/main/Socks5.txt",
+        "description": "r00tee socks5 (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "roosterkid_https",
+        "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt",
+        "description": "roosterkid https (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "roosterkid_socks4",
+        "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt",
+        "description": "roosterkid socks4 (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "shiftytr_proxy",
+        "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt",
+        "description": "shiftytr proxy (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "vakhov_proxy",
+        "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/proxylist.txt",
+        "description": "vakhov proxy (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "vmheaven_http",
+        "url": "https://raw.githubusercontent.com/vmheaven/VMHeaven-Free-Proxy-Updated/main/http.txt",
+        "description": "vmheaven http (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "zaeem20_http",
+        "url": "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/http.txt",
+        "description": "zaeem20 http (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "abuseipdb_30d",
+        "url": "https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/abuseipdb-s100-30d.ipv4",
+        "description": "abuseipdb 30d (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.88,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "blocklist_net_ua",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/blocklist_net_ua.ipset",
+        "description": "blocklist net ua (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "datashield",
+        "url": "https://raw.githubusercontent.com/duggytuxy/Data-Shield_IPv4_Blocklist/main/prod_data-shield_ipv4_blocklist.txt",
+        "description": "datashield (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.88,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "maltrail_scanner",
+        "url": "https://raw.githubusercontent.com/stamparm/maltrail/master/data/mass_scanner.txt",
+        "description": "maltrail scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.75,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "maltrail_scanner_cidr",
+        "url": "https://raw.githubusercontent.com/stamparm/maltrail/master/data/mass_scanner_cidr.txt",
+        "description": "maltrail scanner cidr (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.75,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "myip_bots",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/myip.ipset",
+        "description": "myip bots (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.75,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "sefinek",
+        "url": "https://raw.githubusercontent.com/sefinek/Malicious-IP-Addresses/main/lists/main.txt",
+        "description": "sefinek (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "shadowwhisperer_probes",
+        "url": "https://raw.githubusercontent.com/ShadowWhisperer/IPs/master/Lists/Probes",
+        "description": "shadowwhisperer probes (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.88,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "tn3w_abuse",
+        "url": "https://github.com/tn3w/opendata/releases/download/data/abuse.txt",
+        "description": "tn3w abuse (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.88,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "botscout",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/botscout_7d.ipset",
+        "description": "botscout (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.83,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "honeypot_commenters",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/php_commenters_30d.ipset",
+        "description": "honeypot commenters (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.83,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "honeypot_harvesters",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/php_harvesters_30d.ipset",
+        "description": "honeypot harvesters (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.83,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "honeypot_spammers",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/php_spammers_30d.ipset",
+        "description": "honeypot spammers (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.83,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "stopforumspam_7d",
+        "url": "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/stopforumspam_7d.ipset",
+        "description": "stopforumspam 7d (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.83,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "gluetun_cyberghost",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/cyberghost.json",
+        "description": "CyberGhost (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_expressvpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/expressvpn.json",
+        "description": "ExpressVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_fastestvpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/fastestvpn.json",
+        "description": "FastestVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_giganews",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/giganews.json",
+        "description": "Giganews VPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_hidemyass",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/hidemyass.json",
+        "description": "HideMyAss (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.85,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_ipvanish",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/ipvanish.json",
+        "description": "IPVanish (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_privado",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/privado.json",
+        "description": "PrivadoVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_privatevpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/privatevpn.json",
+        "description": "PrivateVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_purevpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/purevpn.json",
+        "description": "PureVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_slickvpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/slickvpn.json",
+        "description": "SlickVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_surfshark",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/surfshark.json",
+        "description": "Surfshark (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_torguard",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/torguard.json",
+        "description": "TorGuard (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_vpn_unlimited",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/vpn%20unlimited.json",
+        "description": "VPN Unlimited (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_vpnsecure",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/vpnsecure.json",
+        "description": "VPNSecure (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_vyprvpn",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/vyprvpn.json",
+        "description": "VyprVPN (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "gluetun_windscribe",
+        "url": "https://raw.githubusercontent.com/qdm12/gluetun-servers/main/pkg/servers/windscribe.json",
+        "description": "Windscribe (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "torguard",
+        "url": "https://raw.githubusercontent.com/sudesh0sudesh/TorGuardIPs/main/torguard-ips.csv",
+        "description": "TorGuard (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.85,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "x4bnet_vpn_v6",
+        "url": "https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/vpn/ipv6.txt",
+        "description": "x4bnet vpn v6 (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
     }
 ]
