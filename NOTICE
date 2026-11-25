@@ -1,0 +1,7 @@
+IPBlocklist
+Portions of the ipblocklist/ package (ranges, filters, parse, config, fetch,
+reconcile, notes and the structure of pipeline) are derived from Threatkill,
+https://github.com/kboykov/Threatkill, licensed under the Apache License,
+Version 2.0. Those files carry a "Derived from kboykov/Threatkill" note.
+Changes were made: adapted to the IPBL v2 binary format, ASN feeds and the
+flag/category vocabulary of this project.

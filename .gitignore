@@ -211,3 +211,8 @@ blocklist.bin
 blocklist.txt
 
 docs/data/
+
+# Aggregator working directories
+/data/
+/prev/
+__pycache__/

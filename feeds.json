@@ -191,7 +191,7 @@
     },
     {
         "name": "cinsscore",
-        "url": "http://cinsscore.com/list/ci-badguys.txt",
+        "url": "https://cinsscore.com/list/ci-badguys.txt",
         "description": "CINS Army",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.8,

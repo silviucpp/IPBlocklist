@@ -2,14 +2,51 @@ name: Update Feeds
 
 on:
   schedule:
+    # GitHub usually starts scheduled runs a few hours late; outputs carry their own timestamp.
     - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: Publish even if validation fails
+        type: boolean
+        default: false
+  push:
+    branches: [master]
+    paths: ['ipblocklist/**', 'tests/**', 'aggregator.py', 'feeds.json']
+  pull_request:
+    paths: ['ipblocklist/**', 'tests/**', 'aggregator.py', 'feeds.json']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit tests (also validates feeds.json)
+        run: python -m unittest discover -s tests -t . -v
+
   update:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,41 +65,48 @@ jobs:
       - name: Install Python dependencies
         run: pip install curl_cffi
 
-      - name: Download and process feeds
-        run: python aggregator.py
+      - name: Fetch previous release state
+        # Lets a feed that fails today reuse yesterday's data, and lets the run
+        # compare category sizes with the last release before publishing.
+        run: |
+          mkdir -p prev
+          gh release download --dir prev --pattern blocklist.bin || echo "No previous blocklist.bin"
+          gh release download --dir prev --pattern manifest.json || echo "No previous manifest.json"
+
+      - name: Download, validate and build
+        run: |
+          FORCE=""
+          if [ "${{ inputs.force }}" = "true" ]; then FORCE="--force"; fi
+          python aggregator.py --previous prev --out data $FORCE
+
+      - name: Check for changes
+        id: changes
+        run: |
+          NEW=$(jq -r .content_hash data/manifest.json)
+          OLD=$(jq -r '.content_hash // empty' prev/manifest.json 2>/dev/null || true)
+          if [ "$NEW" = "$OLD" ]; then
+            echo "Data unchanged since the last release ($NEW); skipping."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Create Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.changes.outputs.changed == 'true'
         run: |
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
           TAG_NAME="v$(date -u +%Y%m%d-%H%M%S)"
-
+          python -m ipblocklist.notes data/manifest.json "$GITHUB_REPOSITORY" > release-notes.md
           gh release create "$TAG_NAME" \
-            blocklist.bin \
-            blocklist.txt \
-            asns.json \
-            asn_prefixes.json \
-            --title "Blocklist Update - $TIMESTAMP" \
-            --notes "Automated blocklist update from threat intelligence feeds.
-
-          **Files:**
-          - \`blocklist.bin\` - Threat intelligence data (binary format)
-          - \`blocklist.txt\` - Scored and CIDR-minimized blocklist (text format)
-          - \`asns.json\` - Normalized ASN lists keyed by feed name
-          - \`asn_prefixes.json\` - Cached ASN to announced prefixes mapping
-
-          **Download:**
-          \`\`\`bash
-          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.bin
-          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/blocklist.txt
-          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/asns.json
-          wget https://github.com/tn3w/IPBlocklist/releases/download/$TAG_NAME/asn_prefixes.json
-          \`\`\`"
+            data/blocklist.bin \
+            data/blocklist.txt \
+            data/asns.json \
+            data/asn_prefixes.json \
+            data/manifest.json \
+            --title "Blocklist Update - $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            --notes-file release-notes.md
 
       - name: Clean up old releases
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.changes.outputs.changed == 'true'
         run: |
           KEEP=5
           gh release list --limit 100 --json tagName --jq '.[].tagName' \
