@@ -331,7 +331,7 @@
     },
     {
         "name": "turris_greylist",
-        "url": "https://iplists.firehol.org/files/turris_greylist.ipset",
+        "url": "https://view.sentinel.turris.cz/greylist-data/greylist-latest.csv",
         "description": "Turris Greylist",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.6,
@@ -500,16 +500,6 @@
         "categories": ["spam"]
     },
     {
-        "name": "cruzit_web_attacks",
-        "url": "https://iplists.firehol.org/files/cruzit_web_attacks.ipset",
-        "description": "Cruzit web attacks",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.75,
-        "confidence": 0.85,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
-    },
-    {
         "name": "dm_tor",
         "url": "https://iplists.firehol.org/files/dm_tor.ipset",
         "description": "Dan.me.uk Tor nodes",
@@ -518,16 +508,6 @@
         "confidence": 1.0,
         "flags": ["is_tor"],
         "categories": ["anonymizer"]
-    },
-    {
-        "name": "dyndns_ponmocup",
-        "url": "https://iplists.firehol.org/files/dyndns_ponmocup.ipset",
-        "description": "DynDNS Ponmocup malware",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.85,
-        "confidence": 0.95,
-        "flags": ["is_c2_server"],
-        "categories": ["malware", "botnet"]
     },
     {
         "name": "et_block",
@@ -729,16 +709,6 @@
         "confidence": 0.95,
         "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
-    },
-    {
-        "name": "riskdb_lists_ip_proxy",
-        "url": "https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/kind_proxy.txt",
-        "description": "OXL risk-db-lists proxy IPs",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.4,
-        "confidence": 0.8,
-        "flags": ["is_proxy"],
-        "categories": ["anonymizer"]
     },
     {
         "name": "riskdb_lists_ip_scanner",
