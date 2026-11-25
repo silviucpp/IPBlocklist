@@ -7,6 +7,7 @@ import unittest
 from ipblocklist import asn, binfmt, pipeline
 from ipblocklist import ranges as R
 from ipblocklist.config import ConfigError, load_feeds, parse_feeds
+from ipblocklist import fetch
 from ipblocklist.fetch import FetchResult
 from ipblocklist.filters import AddressFilter
 from ipblocklist.parse import ParsedFeed, parse_entry, parse_feed
@@ -124,6 +125,37 @@ class ConfigTests(unittest.TestCase):
     def test_repository_feeds_json_is_valid(self):
         feeds = load_feeds(os.path.join(ROOT, "feeds.json"))
         self.assertGreater(len(feeds), 100)
+
+
+class FetchTests(unittest.TestCase):
+    def test_plain_text(self):
+        self.assertEqual(fetch.decode_body(b"1.2.3.4\n"), "1.2.3.4\n")
+
+    def test_gzip(self):
+        import gzip
+
+        self.assertEqual(fetch.decode_body(gzip.compress(b"1.2.3.4\n5.6.7.8\n")), "1.2.3.4\n5.6.7.8\n")
+
+    def test_zip(self):
+        import io
+        import zipfile
+
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr("a.txt", "1.2.3.4")
+            archive.writestr("b.txt", "5.6.7.8")
+        self.assertEqual(fetch.decode_body(buffer.getvalue()), "1.2.3.4\n5.6.7.8")
+
+    def test_decompression_bomb_is_rejected(self):
+        import gzip
+
+        original = fetch.MAX_DECOMPRESSED
+        fetch.MAX_DECOMPRESSED = 100
+        try:
+            with self.assertRaises(ValueError):
+                fetch.decode_body(gzip.compress(b"x" * 1000))
+        finally:
+            fetch.MAX_DECOMPRESSED = original
 
 
 class ReconcileTests(unittest.TestCase):

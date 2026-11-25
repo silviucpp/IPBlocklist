@@ -6,9 +6,12 @@ when that is installed.
 """
 
 import email.utils
+import gzip
+import io
 import random
 import time
 import urllib.request
+import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
@@ -20,6 +23,7 @@ except ImportError:  # optional dependency
     CFFI_AVAILABLE = False
 
 USER_AGENT = "Mozilla/5.0"
+MAX_DECOMPRESSED = 256 * 1024 * 1024  # guards against decompression bombs
 CFFI_BROWSERS = ("chrome120", "chrome119", "edge99", "safari15_5")
 CFFI_HOSTS = ("bgp.tools",)
 
@@ -44,10 +48,32 @@ def _last_modified(value):
         return None
 
 
+def _bounded(stream):
+    data = stream.read(MAX_DECOMPRESSED + 1)
+    if len(data) > MAX_DECOMPRESSED:
+        raise ValueError(f"decompressed data exceeds {MAX_DECOMPRESSED} bytes")
+    return data
+
+
+def decode_body(raw):
+    """Return the text of a download, unpacking gzip files and zip archives."""
+    if raw[:2] == b"\x1f\x8b":
+        raw = _bounded(gzip.GzipFile(fileobj=io.BytesIO(raw)))
+    elif raw[:4] == b"PK\x03\x04":
+        with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+            parts = []
+            for info in archive.infolist():
+                if not info.is_dir():
+                    with archive.open(info) as member:
+                        parts.append(_bounded(member))
+            raw = b"\n".join(parts)
+    return raw.decode("utf-8", errors="ignore")
+
+
 def _get_urllib(url, timeout):
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=timeout) as response:
-        body = response.read().decode("utf-8", errors="ignore")
+        body = decode_body(response.read())
         return body, _last_modified(response.headers.get("Last-Modified"))
 
 
@@ -60,7 +86,7 @@ def _get_cffi(url, timeout):
     )
     if response.status_code != 200:
         raise RuntimeError(f"HTTP {response.status_code}")
-    return response.text, _last_modified(response.headers.get("last-modified"))
+    return decode_body(response.content), _last_modified(response.headers.get("last-modified"))
 
 
 def download(url, timeout=60, attempts=3, backoff=2.0):

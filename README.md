@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/silviucpp/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
-<img src="https://img.shields.io/badge/feeds-330-blue?style=for-the-badge" alt="Feed Count">
+<img src="https://img.shields.io/badge/feeds-435-blue?style=for-the-badge" alt="Feed Count">
 <img src="https://img.shields.io/badge/artifacts-5-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
@@ -19,7 +19,7 @@ crawler and network-type data) into five release artifacts:
 - `asn_prefixes.json`: cached ASN → announced prefixes
 - `manifest.json`: per-feed status, range counts and SHA-256 of every file
 
-The current dataset is built from 330 feeds and includes IPv4, IPv6, CIDR
+The current dataset is built from 435 feeds and includes IPv4, IPv6, CIDR
 ranges and announced prefixes derived from ASN feeds. It covers threat sources
 (scanners, brute force, C2, malware, spam), anonymizers (Tor, VPN, proxies) and
 infrastructure (datacenters, cloud and CDN ranges, crawlers, ISP and mobile
@@ -378,7 +378,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 ## Performance
 
-- Total feeds: 330
+- Total feeds: 435
 - Typical lookup latency: under 1 ms
 - Binary size, range counts and per-category totals for each run are in
   `manifest.json`; memory use scales with the size of `blocklist.bin`

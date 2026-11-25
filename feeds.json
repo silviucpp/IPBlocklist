@@ -867,32 +867,7 @@
         "base_score": 0.55,
         "confidence": 0.95,
         "is_asn": true,
-        "asns": [
-            "60729",
-            "53667",
-            "4224",
-            "208323",
-            "198093",
-            "401401",
-            "210731",
-            "61125",
-            "214503",
-            "215125",
-            "214094",
-            "205100",
-            "57860",
-            "8283",
-            "215659",
-            "197648",
-            "44925",
-            "198985",
-            "214996",
-            "210083",
-            "49770",
-            "197422",
-            "205235",
-            "30893"
-        ],
+        "asns": ["60729", "53667", "4224", "208323", "198093", "401401", "210731", "61125", "214503", "215125", "214094", "205100", "57860", "8283", "215659", "197648", "44925", "198985", "214996", "210083", "49770", "197422", "205235", "30893"],
         "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
@@ -1312,7 +1287,7 @@
         "name": "windscribe",
         "url": "https://raw.githubusercontent.com/tn3w/Windscribe-IPs/refs/heads/master/windscribe_ips.txt",
         "description": "Windscribe VPN servers",
-        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.7,
         "confidence": 1.0,
         "provider_name": "Windscribe",
@@ -3318,5 +3293,1085 @@
         "confidence": 0.95,
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
+    },
+    {
+        "name": "blocklist_de_ftp",
+        "url": "https://lists.blocklist.de/lists/ftp.txt",
+        "description": "blocklist de ftp (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "blocklist_de_imap",
+        "url": "https://lists.blocklist.de/lists/imap.txt",
+        "description": "blocklist de imap (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "blocklist_de_sip",
+        "url": "https://lists.blocklist.de/lists/sip.txt",
+        "description": "blocklist de sip (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_sipregistration",
+        "url": "https://dataplane.org/sipregistration.txt",
+        "description": "dataplane sipregistration (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_sshpwauth",
+        "url": "https://dataplane.org/sshpwauth.txt",
+        "description": "dataplane sshpwauth (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_telnetlogin",
+        "url": "https://dataplane.org/telnetlogin.txt",
+        "description": "dataplane telnetlogin (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "jamesbrine_bruteforce",
+        "url": "https://jamesbrine.com.au/csv",
+        "description": "jamesbrine bruteforce (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.85,
+        "flags": ["is_brute_force"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "feodotracker_aggressive",
+        "url": "https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.txt",
+        "description": "feodotracker aggressive (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 1.0,
+        "confidence": 0.95,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "arvancloud",
+        "url": "https://www.arvancloud.ir/en/ips.txt",
+        "description": "arvancloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "bunny_cdn",
+        "url": "https://api.bunny.net/system/edgeserverlist",
+        "description": "bunny cdn (iplore)",
+        "regex": "\"((?:\\d{1,3}\\.){3}\\d{1,3})\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cachefly",
+        "url": "https://cachefly.cachefly.net/ips/cdn.txt",
+        "description": "cachefly (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cloudflare_egress",
+        "url": "https://api.cloudflare.com/local-ip-ranges.csv",
+        "description": "cloudflare egress (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cloudfront",
+        "url": "https://d7uri8nf7uskq.cloudfront.net/tools/list-cloudfront-ips",
+        "description": "cloudfront (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "gcore",
+        "url": "https://api.gcore.com/cdn/public-ip-list",
+        "description": "gcore (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "imperva",
+        "url": "https://my.imperva.com/api/integration/v1/ips",
+        "description": "imperva (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "keycdn",
+        "url": "https://www.keycdn.com/shield-prefixes.json",
+        "description": "keycdn (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "quic_cloud",
+        "url": "https://quic.cloud/ips?ln",
+        "description": "quic cloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.97,
+        "flags": ["is_cdn"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ahrefs",
+        "url": "https://api.ahrefs.com/v3/public/crawler-ip-ranges",
+        "description": "ahrefs (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "amazonbot",
+        "url": "https://developer.amazon.com/amazonbot/ip-addresses/",
+        "description": "amazonbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "anthropic",
+        "url": "https://platform.claude.com/docs/en/api/ip-addresses",
+        "description": "anthropic (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "applebot",
+        "url": "https://search.developer.apple.com/applebot.json",
+        "description": "applebot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "bingbot",
+        "url": "https://www.bing.com/toolbox/bingbot.json",
+        "description": "bingbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "ccbot",
+        "url": "https://index.commoncrawl.org/ccbot.json",
+        "description": "ccbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "claudebot",
+        "url": "https://claude.com/crawling/bots.json",
+        "description": "claudebot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "duckduckbot",
+        "url": "https://duckduckgo.com/duckduckbot.json",
+        "description": "duckduckbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_fetchers",
+        "url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json",
+        "description": "google fetchers (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_fetchers_own",
+        "url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json",
+        "description": "google fetchers own (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_special_crawlers",
+        "url": "https://developers.google.com/static/crawling/ipranges/special-crawlers.json",
+        "description": "google special crawlers (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "googlebot",
+        "url": "https://developers.google.com/static/crawling/ipranges/common-crawlers.json",
+        "description": "googlebot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "mistral_user",
+        "url": "https://mistral.ai/mistralai-user-ips.json",
+        "description": "mistral user (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "mojeekbot",
+        "url": "https://www.mojeek.com/mojeekbot.json",
+        "description": "mojeekbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "openai_chatgpt_user",
+        "url": "https://openai.com/chatgpt-user.json",
+        "description": "openai chatgpt user (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "openai_gptbot",
+        "url": "https://openai.com/gptbot.json",
+        "description": "openai gptbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "openai_searchbot",
+        "url": "https://openai.com/searchbot.json",
+        "description": "openai searchbot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "perplexity_bot",
+        "url": "https://www.perplexity.com/perplexitybot.json",
+        "description": "perplexity bot (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "perplexity_user",
+        "url": "https://www.perplexity.com/perplexity-user.json",
+        "description": "perplexity user (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "aws_geofeed",
+        "url": "https://ip-ranges.amazonaws.com/geo-ip-feed.csv",
+        "description": "aws geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "cherryservers",
+        "url": "https://geofeed.cherryservers.com/geofeed.csv",
+        "description": "cherryservers (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "clouvider_geofeed",
+        "url": "https://clouvider.com/geoipfeed.csv",
+        "description": "clouvider geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "equinix_metal",
+        "url": "https://geofeed.equinixmetal.com/",
+        "description": "equinix metal (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "exoscale",
+        "url": "https://exoscale-prefixes.sos.exo.io/exoscale_geofeed",
+        "description": "exoscale (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "gcp_geofeed",
+        "url": "https://www.gstatic.com/ipranges/cloud_geofeed",
+        "description": "gcp geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "github",
+        "url": "https://api.github.com/meta",
+        "description": "github (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hetzner_geofeed",
+        "url": "https://www.hetzner.com/geofeed.csv",
+        "description": "hetzner geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "upcloud",
+        "url": "https://upcloud.com/geofeed.csv",
+        "description": "upcloud (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "vultr_geofeed",
+        "url": "https://geofeed.constant.com/",
+        "description": "vultr geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_vpn",
+        "url": "https://www.gstatic.com/vpn/geofeed",
+        "description": "google vpn (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_isp"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "starlink_geofeed",
+        "url": "https://geoip.starlinkisp.net/feed.csv",
+        "description": "starlink geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.0,
+        "confidence": 0.95,
+        "flags": ["is_isp"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "tweetfeed",
+        "url": "https://api.tweetfeed.live/v1/month/ip",
+        "description": "tweetfeed (iplore)",
+        "regex": "\"((?:\\d{1,3}\\.){3}\\d{1,3})\"",
+        "base_score": 0.93,
+        "confidence": 0.93,
+        "flags": ["is_malware"],
+        "categories": ["malware"]
+    },
+    {
+        "name": "blocklist_de_bots",
+        "url": "https://lists.blocklist.de/lists/bots.txt",
+        "description": "blocklist de bots (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_dnsrd",
+        "url": "https://dataplane.org/dnsrd.txt",
+        "description": "dataplane dnsrd (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_dnsrdany",
+        "url": "https://dataplane.org/dnsrdany.txt",
+        "description": "dataplane dnsrdany (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_dnsversion",
+        "url": "https://dataplane.org/dnsversion.txt",
+        "description": "dataplane dnsversion (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_sipinvitation",
+        "url": "https://dataplane.org/sipinvitation.txt",
+        "description": "dataplane sipinvitation (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_sipquery",
+        "url": "https://dataplane.org/sipquery.txt",
+        "description": "dataplane sipquery (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_sshclient",
+        "url": "https://dataplane.org/sshclient.txt",
+        "description": "dataplane sshclient (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_vncrfb",
+        "url": "https://dataplane.org/vncrfb.txt",
+        "description": "dataplane vncrfb (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "emerging_block",
+        "url": "https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt",
+        "description": "emerging block (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "interserver",
+        "url": "https://sigs.interserver.net/ipslim.txt",
+        "description": "interserver (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "interserver_iprbl",
+        "url": "https://sigs.interserver.net/iprbl.txt",
+        "description": "interserver iprbl (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "isc_top",
+        "url": "https://isc.sans.edu/api/sources/attacks/5000/?json",
+        "description": "isc top (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "myipms_blacklist",
+        "url": "https://myip.ms/files/blacklist/general/latest_blacklist.txt",
+        "description": "myipms blacklist (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "nubi",
+        "url": "https://www.nubi-network.com/list.txt",
+        "description": "nubi (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "rutgers_attackers",
+        "url": "https://report.cs.rutgers.edu/DROP/attackers",
+        "description": "rutgers attackers (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.75,
+        "confidence": 0.85,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
+    },
+    {
+        "name": "dataplane_smtpdata",
+        "url": "https://dataplane.org/smtpdata.txt",
+        "description": "dataplane smtpdata (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.7,
+        "confidence": 0.8,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "dataplane_smtpgreet",
+        "url": "https://dataplane.org/smtpgreet.txt",
+        "description": "dataplane smtpgreet (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.7,
+        "confidence": 0.8,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "stopforumspam_30d_list",
+        "url": "https://iplists.firehol.org/files/stopforumspam_30d.ipset",
+        "description": "stopforumspam 30d list (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.8,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "modat_scanner",
+        "url": "https://scanner.modat.io/ipv4.txt",
+        "description": "modat scanner (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "isc_research",
+        "url": "https://isc.sans.edu/api/threatcategory/research?json",
+        "description": "isc research (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "atlassian",
+        "url": "https://ip-ranges.atlassian.com/",
+        "description": "atlassian (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "auth0",
+        "url": "https://cdn.auth0.com/ip-ranges.json",
+        "description": "auth0 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "datadog",
+        "url": "https://ip-ranges.datadoghq.com/",
+        "description": "datadog (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_corp_geofeed",
+        "url": "https://www.gstatic.com/geofeed/corp_external",
+        "description": "google corp geofeed (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_public_dns",
+        "url": "https://www.gstatic.com/ipranges/publicdns.json",
+        "description": "google public dns (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "google_services",
+        "url": "https://www.gstatic.com/ipranges/goog.json",
+        "description": "google services (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "microsoft_365",
+        "url": "https://endpoints.office.com/endpoints/worldwide?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7",
+        "description": "microsoft 365 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "okta",
+        "url": "https://s3.amazonaws.com/okta-ip-ranges/ip_ranges.json",
+        "description": "okta (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "paddle",
+        "url": "https://api.paddle.com/ips",
+        "description": "paddle (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "peeringdb_ixpfx",
+        "url": "https://www.peeringdb.com/api/ixpfx",
+        "description": "peeringdb ixpfx (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "salesforce",
+        "url": "https://ip-ranges.salesforce.com/ip-ranges.json",
+        "description": "salesforce (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_sendgrid",
+        "url": "https://dns.google/resolve?name=sendgrid.net&type=TXT",
+        "description": "spf sendgrid (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stripe_api",
+        "url": "https://stripe.com/files/ips/ips_api.txt",
+        "description": "stripe api (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stripe_armada",
+        "url": "https://stripe.com/files/ips/ips_armada_gator.txt",
+        "description": "stripe armada (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stripe_webhooks",
+        "url": "https://stripe.com/files/ips/ips_webhooks.txt",
+        "description": "stripe webhooks (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "telegram",
+        "url": "https://core.telegram.org/resources/cidr.txt",
+        "description": "telegram (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "yandex",
+        "url": "https://yandex.com/ips",
+        "description": "yandex (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "zoom",
+        "url": "https://assets.zoom.us/docs/ipranges/Zoom.txt",
+        "description": "zoom (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "zscaler",
+        "url": "https://config.zscaler.com/api/zscaler.net/cenr/json",
+        "description": "zscaler (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+/\\d+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "hetrixtools",
+        "url": "https://hetrixtools.com/resources/uptime-monitor-ips.txt",
+        "description": "hetrixtools (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "pingdom",
+        "url": "https://my.pingdom.com/probes/ipv4",
+        "description": "pingdom (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "statuscake",
+        "url": "https://app.statuscake.com/Workfloor/Locations.php?format=txt",
+        "description": "statuscake (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "updown_v4",
+        "url": "https://updown.io/api/nodes/ipv4",
+        "description": "updown v4 (iplore)",
+        "regex": "\"((?:\\d{1,3}\\.){3}\\d{1,3})\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "updown_v6",
+        "url": "https://updown.io/api/nodes/ipv6",
+        "description": "updown v6 (iplore)",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "uptimerobot",
+        "url": "https://uptimerobot.com/inc/files/ips/IPv4andIPv6.txt",
+        "description": "uptimerobot (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "proxyscrape",
+        "url": "https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&proxy_format=ipport&format=text",
+        "description": "proxyscrape (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "proxyscrape_http",
+        "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all",
+        "description": "proxyscrape http (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "sunny9577_proxy",
+        "url": "https://sunny9577.github.io/proxy-scraper/proxies.txt",
+        "description": "sunny9577 proxy (iplore)",
+        "regex": "^([0-9.]+):\\d+",
+        "base_score": 0.4,
+        "confidence": 0.75,
+        "flags": ["is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "airvpn",
+        "url": "https://airvpn.org/api/status/",
+        "description": "airvpn (iplore)",
+        "regex": "\"((?:\\d{1,3}\\.){3}\\d{1,3})\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "az0_vpn",
+        "url": "https://az0-vpnip-public.oooninja.com/ip.txt",
+        "description": "az0 vpn (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "cyberghost",
+        "url": "https://raw.githubusercontent.com/sudesh0sudesh/PIA-IPs/main/cyberghost_ips.csv",
+        "description": "cyberghost (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "ivpn",
+        "url": "https://api.ivpn.net/v5/servers.json",
+        "description": "ivpn (iplore)",
+        "regex": "\"((?:\\d{1,3}\\.){3}\\d{1,3})\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "ovpn",
+        "url": "https://www.ovpn.com/v2/api/client/entry",
+        "description": "ovpn (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "riseup",
+        "url": "https://api.black.riseup.net/3/config/eip-service.json",
+        "description": "riseup (iplore)",
+        "regex": "\"(?:ip_?prefix|ipv4Prefix|ipv6Prefix|cidr|ip|ip_address|ipv4|ipv6)\":\\s*\"([0-9a-fA-F:.]+(?:/\\d+)?)\"",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "vpngate",
+        "url": "https://www.vpngate.net/api/iphone/",
+        "description": "vpngate (iplore)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "cloudflare_warp",
+        "url": "https://api.cloudflare.com/warp-egress-ip-ranges.csv",
+        "description": "cloudflare warp (iplore)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.7,
+        "confidence": 0.95,
+        "flags": ["is_vpn", "is_proxy"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "kagibot",
+        "url": "https://kagi.com/bot",
+        "description": "Kagi search crawler IPs, published on the Kagi bot page (HTML)",
+        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3})(?:\\s|<[^>]*>|&nbsp;)+[a-z0-9-]+\\.kagibot\\.org",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stopforumspam_365",
+        "url": "https://www.stopforumspam.com/downloads/listed_ip_365.zip",
+        "description": "StopForumSpam IPs listed in the last 365 days (zip)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.55,
+        "confidence": 0.7,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "ipthreat",
+        "url": "https://lists.ipthreat.net/file/ipthreat-lists/threat/threat-50.txt.gz",
+        "description": "IPThreat threat list, score >= 50 (gzip)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.65,
+        "confidence": 0.75,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
     }
 ]
