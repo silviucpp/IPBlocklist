@@ -20,9 +20,9 @@ SHRINK_MIN_ENTRIES = 50  # ignore shrinkage on tiny feeds
 # Upstreams whose Last-Modified header is older than this are reported as stale
 UPSTREAM_STALE_DAYS = 180
 
-# Category level (guards against a broken run reaching consumers)
+# Category level (guards against a broken run reaching consumers). Only shrinkage is
+# checked: growth is deliberate (new feeds), while a collapse means a broken download.
 CATEGORY_MIN_RATIO = 0.4  # fail if a category keeps less than 40% of its ranges
-CATEGORY_MAX_RATIO = 3.0  # fail if a category more than triples
 CATEGORY_MIN_ENTRIES = 100
 MAX_FAILED_FEED_SHARE = 0.25  # fail if more than a quarter of the feeds produced nothing
 
@@ -92,6 +92,6 @@ def check_run(decisions, categories, previous_manifest):
         if old < CATEGORY_MIN_ENTRIES:
             continue
         ratio = new / old
-        if ratio < CATEGORY_MIN_RATIO or ratio > CATEGORY_MAX_RATIO:
+        if ratio < CATEGORY_MIN_RATIO:
             problems.append(f"category {name} changed from {old} to {new} ranges ({ratio:.0%})")
     return problems

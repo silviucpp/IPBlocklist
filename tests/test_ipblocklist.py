@@ -226,6 +226,7 @@ class ReconcileTests(unittest.TestCase):
         prev = {"categories": {"attacks": {"ranges_v4": 1000, "ranges_v6": 0}}}
         self.assertEqual(len(check_run(ok, {"attacks": {"ranges_v4": 100, "ranges_v6": 0}}, prev)), 1)
         self.assertEqual(check_run(ok, {"attacks": {"ranges_v4": 900, "ranges_v6": 0}}, prev), [])
+        self.assertEqual(check_run(ok, {"attacks": {"ranges_v4": 50000, "ranges_v6": 0}}, prev), [])
 
 
 class BinfmtTests(unittest.TestCase):

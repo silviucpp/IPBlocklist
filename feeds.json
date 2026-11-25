@@ -4098,7 +4098,7 @@
         "name": "spf_sendgrid",
         "url": "https://dns.google/resolve?name=sendgrid.net&type=TXT",
         "description": "spf sendgrid (iplore)",
-        "regex": "(?<![0-9.])((?:\\d{1,3}\\.){3}\\d{1,3}(?:/\\d{1,2})?)(?![0-9.])",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
         "base_score": 0.35,
         "confidence": 0.95,
         "flags": ["is_datacenter"],
@@ -4355,16 +4355,6 @@
         "categories": ["infrastructure"]
     },
     {
-        "name": "stopforumspam_365",
-        "url": "https://www.stopforumspam.com/downloads/listed_ip_365.zip",
-        "description": "StopForumSpam IPs listed in the last 365 days (zip)",
-        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
-        "base_score": 0.55,
-        "confidence": 0.7,
-        "flags": ["is_spammer"],
-        "categories": ["spam"]
-    },
-    {
         "name": "ipthreat",
         "url": "https://lists.ipthreat.net/file/ipthreat-lists/threat/threat-50.txt.gz",
         "description": "IPThreat threat list, score >= 50 (gzip)",
@@ -4393,5 +4383,97 @@
         "confidence": 0.85,
         "flags": ["is_malware"],
         "categories": ["malware"]
+    },
+    {
+        "name": "spamhaus_asndrop",
+        "url": "https://www.spamhaus.org/drop/asndrop.json",
+        "description": "Spamhaus ASN-DROP: ASNs run by criminal operations",
+        "regex": "^\\{\"asn\":([0-9]+)",
+        "base_score": 0.75,
+        "confidence": 0.95,
+        "is_asn": true,
+        "provider_name": "Spamhaus",
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
+    },
+    {
+        "name": "spf_mailgun_1",
+        "url": "https://dns.google/resolve?name=_spf1.mailgun.org&type=TXT",
+        "description": "Mailgun sending IPs from SPF record _spf1.mailgun.org",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_mailgun_2",
+        "url": "https://dns.google/resolve?name=_spf2.mailgun.org&type=TXT",
+        "description": "Mailgun sending IPs from SPF record _spf2.mailgun.org",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_mandrill",
+        "url": "https://dns.google/resolve?name=spf.mandrillapp.com&type=TXT",
+        "description": "Mailchimp Mandrill sending IPs from SPF record spf.mandrillapp.com",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_postmark",
+        "url": "https://dns.google/resolve?name=spf.mtasv.net&type=TXT",
+        "description": "Postmark sending IPs from SPF record spf.mtasv.net",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_brevo",
+        "url": "https://dns.google/resolve?name=spf.sendinblue.com&type=TXT",
+        "description": "Brevo sending IPs from SPF record spf.sendinblue.com",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_mailjet",
+        "url": "https://dns.google/resolve?name=spf.mailjet.com&type=TXT",
+        "description": "Mailjet sending IPs from SPF record spf.mailjet.com",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "spf_amazon_ses",
+        "url": "https://dns.google/resolve?name=amazonses.com&type=TXT",
+        "description": "Amazon SES sending IPs from SPF record amazonses.com",
+        "regex": "ip[46]:([0-9A-Fa-f.:/]+)",
+        "base_score": 0.35,
+        "confidence": 0.95,
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
+    },
+    {
+        "name": "stopforumspam_180",
+        "url": "https://www.stopforumspam.com/downloads/listed_ip_180.zip",
+        "description": "StopForumSpam IPs listed in the last 180 days (zip)",
+        "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
+        "base_score": 0.6,
+        "confidence": 0.75,
+        "flags": ["is_spammer"],
+        "categories": ["spam"]
     }
 ]

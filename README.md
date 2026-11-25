@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/silviucpp/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
-<img src="https://img.shields.io/badge/feeds-437-blue?style=for-the-badge" alt="Feed Count">
+<img src="https://img.shields.io/badge/feeds-445-blue?style=for-the-badge" alt="Feed Count">
 <img src="https://img.shields.io/badge/artifacts-5-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
@@ -19,7 +19,7 @@ crawler and network-type data) into five release artifacts:
 - `asn_prefixes.json`: cached ASN → announced prefixes
 - `manifest.json`: per-feed status, range counts and SHA-256 of every file
 
-The current dataset is built from 437 feeds and includes IPv4, IPv6, CIDR
+The current dataset is built from 445 feeds and includes IPv4, IPv6, CIDR
 ranges and announced prefixes derived from ASN feeds. It covers threat sources
 (scanners, brute force, C2, malware, spam), anonymizers (Tor, VPN, proxies) and
 infrastructure (datacenters, cloud and CDN ranges, crawlers, ISP and mobile
@@ -95,7 +95,7 @@ without affecting `blocklist.txt`.
 - **Config validation.** `feeds.json` is checked for duplicate names, unknown keys, flags or categories, bad scores, regexes without a capture group and non-HTTPS URLs (opt in per feed with `allow_http`).
 - **Never-block filter.** Private, loopback, link-local, CGNAT, multicast, reserved and documentation ranges are removed from every feed; for IPv6 only `2000::/3` is kept. A single entry wider than `/8` (IPv4) or `/16` (IPv6) is dropped and counted as `too_broad`.
 - **Per-feed fallback.** A feed that fails to download, returns nothing, or shrinks by more than half reuses the previous release's data (up to 7 runs; shrinkage is accepted after 2 runs). This needs the last release: `python aggregator.py --previous prev --out data` with `blocklist.bin` and `manifest.json` in `prev/`.
-- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% or grows past 300% of its previous range count. Override with `--force`.
+- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% of its previous range count. Growth is not limited, so adding feeds never needs `--force`. Override with `--force`.
 - **Manifest.** `manifest.json` records per-feed status, range counts, upstream `Last-Modified` age (feeds unchanged for over 180 days are flagged) and SHA-256 of every output file.
 - **ASN lookups.** Failed RIPEstat lookups are never cached.
 
@@ -395,7 +395,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 ## Performance
 
-- Total feeds: 437
+- Total feeds: 445
 - Typical lookup latency: under 1 ms
 - Binary size, range counts and per-category totals for each run are in
   `manifest.json`; memory use scales with the size of `blocklist.bin`

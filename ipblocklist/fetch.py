@@ -107,7 +107,9 @@ def decode_body(raw):
 
 
 def _get_urllib(url, timeout):
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"}
+    )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         body = decode_body(response.read())
         return body, _last_modified(response.headers.get("Last-Modified"))
