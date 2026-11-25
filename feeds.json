@@ -451,10 +451,10 @@
     },
     {
         "name": "nordvpn",
-        "url": "https://api.nordvpn.com/v1/servers?limit=10000",
+        "url": "https://api.nordvpn.com/v1/servers?limit=0",
         "description": "NordVPN servers",
         "regex": "\"(?:station|ipv6_station)\":\"([0-9a-fA-F:.]+)\"",
-        "base_score": 0.5,
+        "base_score": 0.7,
         "confidence": 1.0,
         "provider_name": "NordVPN",
         "flags": ["is_vpn"],
@@ -465,8 +465,8 @@
         "url": "https://raw.githubusercontent.com/tn3w/ProtonVPN-IPs/refs/heads/master/protonvpn_ips.json",
         "description": "ProtonVPN servers",
         "regex": "\"([0-9a-fA-F:.]+)\"",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "ProtonVPN",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -476,8 +476,8 @@
         "url": "https://raw.githubusercontent.com/sudesh0sudesh/ExpressVPN-IPs/refs/heads/main/express_ips.csv",
         "description": "ExpressVPN servers",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+)",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "ExpressVPN",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -487,8 +487,8 @@
         "url": "https://raw.githubusercontent.com/sudesh0sudesh/surfshark-IPs/refs/heads/main/surfshark_ips.csv",
         "description": "Surfshark VPN servers",
         "regex": "^(?![#;/])([0-9a-fA-F:.]+)",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "Surfshark",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -498,7 +498,7 @@
         "url": "https://serverlist.piaservers.net/vpninfo/servers/v6",
         "description": "Private Internet Access VPN servers",
         "regex": "\"ip\":\"([0-9a-fA-F:.]+)\"",
-        "base_score": 0.5,
+        "base_score": 0.7,
         "confidence": 1.0,
         "provider_name": "Private Internet Access",
         "flags": ["is_vpn"],
@@ -509,8 +509,8 @@
         "url": "https://raw.githubusercontent.com/tn3w/TunnelBear-IPs/refs/heads/master/tunnelbear_ips.json",
         "description": "TunnelBear VPN servers",
         "regex": "\"([0-9a-fA-F:.]+)\"",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "TunnelBear",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -520,7 +520,7 @@
         "url": "https://api.mullvad.net/www/relays/all",
         "description": "Mullvad VPN servers",
         "regex": "\"(?:ipv4_addr_in|ipv6_addr_in)\":\"([0-9a-fA-F:.]+)\"",
-        "base_score": 0.5,
+        "base_score": 0.7,
         "confidence": 1.0,
         "provider_name": "Mullvad",
         "flags": ["is_vpn"],
@@ -531,10 +531,11 @@
         "url": "",
         "description": "Static Mullvad ASN list",
         "regex": "",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "is_asn": true,
         "asns": ["216025"],
+        "provider_name": "Mullvad",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
     },
@@ -836,8 +837,8 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
     },
     {
         "name": "riskdb_lists_net_hosting",
@@ -876,8 +877,8 @@
         "regex": "^(?![#;/])([0-9a-fA-F:.]+(?:/\\d+)?)",
         "base_score": 0.35,
         "confidence": 0.95,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
     },
     {
         "name": "riskdb_lists_ip_hosting",
@@ -937,8 +938,8 @@
         "base_score": 0.35,
         "confidence": 0.95,
         "is_asn": true,
-        "flags": ["is_scanner"],
-        "categories": ["attacks"]
+        "flags": ["is_crawler"],
+        "categories": ["infrastructure"]
     },
     {
         "name": "riskdb_lists_asn_vpn",
@@ -1061,21 +1062,10 @@
         "url": "https://bgp.tools/tags/vpn",
         "description": "BGP.tools VPN Host tag",
         "regex": "AS([0-9]+)",
-        "base_score": 0.5,
-        "confidence": 0.9,
+        "base_score": 0.4,
+        "confidence": 0.6,
         "is_asn": true,
         "flags": ["is_vpn"],
-        "categories": ["anonymizer"]
-    },
-    {
-        "name": "bgptools_tor_asns",
-        "url": "https://bgp.tools/tags/tor",
-        "description": "BGP.tools Tor services tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.55,
-        "confidence": 0.95,
-        "is_asn": true,
-        "flags": ["is_tor"],
         "categories": ["anonymizer"]
     },
     {
@@ -1094,11 +1084,11 @@
         "url": "https://bgp.tools/tags/c2s",
         "description": "BGP.tools Malware C2 tag",
         "regex": "AS([0-9]+)",
-        "base_score": 1.0,
-        "confidence": 0.95,
+        "base_score": 0.35,
+        "confidence": 0.9,
         "is_asn": true,
-        "flags": ["is_c2_server"],
-        "categories": ["malware", "botnet"]
+        "flags": ["is_datacenter"],
+        "categories": ["infrastructure"]
     },
     {
         "name": "bgptools_ddos_mitigation_asns",
@@ -1106,7 +1096,7 @@
         "description": "BGP.tools DDoS Mitigation tag",
         "regex": "AS([0-9]+)",
         "base_score": 0.0,
-        "confidence": 0.9,
+        "confidence": 0.65,
         "is_asn": true,
         "flags": ["is_cdn"],
         "categories": ["infrastructure"]
@@ -1120,17 +1110,6 @@
         "confidence": 0.9,
         "is_asn": true,
         "flags": ["is_mobile"],
-        "categories": ["infrastructure"]
-    },
-    {
-        "name": "bgptools_business_broadband_asns",
-        "url": "https://bgp.tools/tags/biznet",
-        "description": "BGP.tools Business Broadband tag",
-        "regex": "AS([0-9]+)",
-        "base_score": 0.35,
-        "confidence": 0.9,
-        "is_asn": true,
-        "flags": ["is_datacenter"],
         "categories": ["infrastructure"]
     },
     {
@@ -1608,8 +1587,8 @@
         "url": "https://raw.githubusercontent.com/silvether/pia-vpn-ranges/master/pia-ranges",
         "description": "Private Internet Access VPN IP ranges",
         "regex": "^([0-9.]+(?:/\\d+)?)",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "Private Internet Access",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -1619,8 +1598,8 @@
         "url": "https://gist.githubusercontent.com/Windows81/17e75698d4fe349bcfb71d1c1ca537d4/raw",
         "description": "CyberGhost HTTPS proxy hosts",
         "regex": "^([0-9.]+)",
-        "base_score": 0.5,
-        "confidence": 1.0,
+        "base_score": 0.7,
+        "confidence": 0.9,
         "provider_name": "CyberGhost",
         "flags": ["is_vpn"],
         "categories": ["anonymizer"]
@@ -1662,7 +1641,7 @@
         "description": "iCloud Private Relay - Official egress IP ranges (CSV)",
         "regex": "^([0-9a-fA-F:.]+(?:/\\d+)?),",
         "base_score": 0.4,
-        "confidence": 0.99,
+        "confidence": 1.0,
         "flags": ["is_vpn", "is_proxy", "is_cdn"],
         "categories": ["anonymizer", "infrastructure"]
     },
@@ -1675,6 +1654,27 @@
         "confidence": 0.9,
         "flags": ["is_vpn", "is_proxy", "is_cdn"],
         "categories": ["anonymizer", "infrastructure"]
+    },
+    {
+        "name": "windscribe",
+        "url": "https://raw.githubusercontent.com/tn3w/Windscribe-IPs/refs/heads/master/windscribe_ips.txt",
+        "description": "Windscribe VPN servers",
+        "regex": "\"([0-9a-fA-F:.]+)\"",
+        "base_score": 0.7,
+        "confidence": 1.0,
+        "provider_name": "Windscribe",
+        "flags": ["is_vpn"],
+        "categories": ["anonymizer"]
+    },
+    {
+        "name": "needamulligan_blocklist",
+        "url": "https://raw.githubusercontent.com/NeedAMulligan/Block_List_IP_Ranges/refs/heads/main/Consolidated-Blocked-IPs%20with%20ASN%20Info.txt",
+        "description": "NeedAMulligan - Consolidated blocked IP ranges with ASN info",
+        "regex": "^(?!#)([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+(?:/\\d+)?)",
+        "base_score": 0.5,
+        "confidence": 0.6,
+        "flags": ["is_scanner"],
+        "categories": ["attacks"]
     },
     {
         "name": "proxy_pub",
