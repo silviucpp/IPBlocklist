@@ -2,6 +2,7 @@ import ipaddress
 import json
 import os
 import tempfile
+import types
 import unittest
 
 from ipblocklist import asn, binfmt, pipeline
@@ -156,6 +157,40 @@ class FetchTests(unittest.TestCase):
                 fetch.decode_body(gzip.compress(b"x" * 1000))
         finally:
             fetch.MAX_DECOMPRESSED = original
+
+
+class SecretUrlTests(unittest.TestCase):
+    KEY = "s3cr3t-key"
+
+    def test_resolve_substitutes_environment(self):
+        url, secrets = fetch.resolve_url("https://x.example/{API_KEY}/a.csv", {"API_KEY": self.KEY})
+        self.assertEqual(url, f"https://x.example/{self.KEY}/a.csv")
+        self.assertEqual(secrets, {"API_KEY": self.KEY})
+
+    def test_plain_url_untouched(self):
+        self.assertEqual(fetch.resolve_url("https://x.example/a.txt", {}), ("https://x.example/a.txt", {}))
+
+    def test_missing_variable_fails_that_feed_only(self):
+        feeds = [
+            types.SimpleNamespace(name="keyed", url="https://x.example/{API_KEY}/a.csv"),
+            types.SimpleNamespace(name="plain", url="https://x.example/b.txt"),
+        ]
+        results = fetch.fetch_all(feeds, downloader=lambda url: FetchResult(lines=["1.1.1.1"]), environ={})
+        self.assertIn("API_KEY", results["keyed"].error)
+        self.assertTrue(results["plain"].ok)
+
+    def test_secret_is_removed_from_errors(self):
+        feeds = [types.SimpleNamespace(name="keyed", url="https://x.example/{API_KEY}/a.csv")]
+        downloader = lambda url: FetchResult(error=f"HTTPError for {url}")
+        results = fetch.fetch_all(feeds, downloader=downloader, environ={"API_KEY": self.KEY})
+        self.assertNotIn(self.KEY, results["keyed"].error)
+        self.assertIn("{API_KEY}", results["keyed"].error)
+
+    def test_downloader_receives_resolved_url(self):
+        seen = []
+        feeds = [types.SimpleNamespace(name="keyed", url="https://x.example/{API_KEY}/a.csv")]
+        fetch.fetch_all(feeds, downloader=lambda url: seen.append(url) or FetchResult(lines=[]), environ={"API_KEY": self.KEY})
+        self.assertEqual(seen, [f"https://x.example/{self.KEY}/a.csv"])
 
 
 class ReconcileTests(unittest.TestCase):

@@ -75,6 +75,8 @@ jobs:
           gh release download --dir prev --pattern manifest.json || echo "No previous manifest.json"
 
       - name: Download, validate and build
+        env:
+          ABUSECH_AUTH_KEY: ${{ secrets.ABUSECH_AUTH_KEY }}
         run: |
           FORCE=""
           if [ "${{ inputs.force }}" = "true" ]; then FORCE="--force"; fi

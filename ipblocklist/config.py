@@ -105,6 +105,9 @@ def parse_feeds(raw):
             asns = entry.get("asns")
             url = entry.get("url", "")
             scheme = urlparse(url).scheme
+            leftover = re.sub(r"\{[A-Z][A-Z0-9_]*\}", "", url)
+            if "{" in leftover or "}" in leftover:
+                raise ConfigError(f"{name}: url placeholders must look like {{ENV_VAR_NAME}}")
             if asns is None and scheme != "https" and not (scheme == "http" and entry.get("allow_http")):
                 raise ConfigError(f"{name}: url must use https (set allow_http to override)")
 

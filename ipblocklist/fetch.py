@@ -8,7 +8,9 @@ when that is installed.
 import email.utils
 import gzip
 import io
+import os
 import random
+import re
 import time
 import urllib.request
 import zipfile
@@ -26,6 +28,40 @@ USER_AGENT = "Mozilla/5.0"
 MAX_DECOMPRESSED = 256 * 1024 * 1024  # guards against decompression bombs
 CFFI_BROWSERS = ("chrome120", "chrome119", "edge99", "safari15_5")
 CFFI_HOSTS = ("bgp.tools",)
+
+
+PLACEHOLDER = re.compile(r"\{([A-Z][A-Z0-9_]*)\}")
+
+
+class MissingSecret(Exception):
+    """A feed URL refers to an environment variable that is not set."""
+
+
+def resolve_url(url, environ=None):
+    """Replace ``{NAME}`` placeholders with environment variables.
+
+    Returns ``(url, secrets)`` where ``secrets`` maps each substituted
+    variable name to its value, so callers can scrub it from messages.
+    """
+    environ = os.environ if environ is None else environ
+    secrets = {}
+
+    def substitute(match):
+        name = match.group(1)
+        value = environ.get(name)
+        if not value:
+            raise MissingSecret(name)
+        secrets[name] = value
+        return value
+
+    return PLACEHOLDER.sub(substitute, url), secrets
+
+
+def redact(text, secrets):
+    """Hide secret values in ``text``, showing the variable name instead."""
+    for name, value in secrets.items():
+        text = text.replace(value, "{" + name + "}")
+    return text
 
 
 @dataclass
@@ -104,8 +140,23 @@ def download(url, timeout=60, attempts=3, backoff=2.0):
     return FetchResult(error=last_error)
 
 
-def fetch_all(feeds, workers=10, downloader=download):
-    """Return ``{feed.name: FetchResult}`` for every feed."""
+def _fetch_feed(feed, downloader, environ):
+    try:
+        url, secrets = resolve_url(feed.url, environ)
+    except MissingSecret as exc:
+        return FetchResult(error=f"environment variable {exc.args[0]} is not set")
+    result = downloader(url)
+    if secrets and result.error:
+        result = FetchResult(error=redact(result.error, secrets), last_modified=result.last_modified)
+    return result
+
+
+def fetch_all(feeds, workers=10, downloader=download, environ=None):
+    """Return ``{feed.name: FetchResult}`` for every feed.
+
+    URLs may contain ``{NAME}`` placeholders, filled from the environment; the
+    resolved URL (which holds the secret) is never stored or reported.
+    """
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        results = pool.map(lambda feed: (feed.name, downloader(feed.url)), feeds)
+        results = pool.map(lambda feed: (feed.name, _fetch_feed(feed, downloader, environ)), feeds)
         return dict(results)

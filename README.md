@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/silviucpp/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
-<img src="https://img.shields.io/badge/feeds-435-blue?style=for-the-badge" alt="Feed Count">
+<img src="https://img.shields.io/badge/feeds-437-blue?style=for-the-badge" alt="Feed Count">
 <img src="https://img.shields.io/badge/artifacts-5-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
@@ -19,7 +19,7 @@ crawler and network-type data) into five release artifacts:
 - `asn_prefixes.json`: cached ASN → announced prefixes
 - `manifest.json`: per-feed status, range counts and SHA-256 of every file
 
-The current dataset is built from 435 feeds and includes IPv4, IPv6, CIDR
+The current dataset is built from 437 feeds and includes IPv4, IPv6, CIDR
 ranges and announced prefixes derived from ASN feeds. It covers threat sources
 (scanners, brute force, C2, malware, spam), anonymizers (Tor, VPN, proxies) and
 infrastructure (datacenters, cloud and CDN ranges, crawlers, ISP and mobile
@@ -258,6 +258,23 @@ prefixes). On the first run every ASN is resolved via RIPEstat; later runs
 reusing the same `--out` only fetch new ones. Failed lookups are never cached.
 Delete the file to force a full refresh. The CI workflow starts without a cache.
 
+### Feeds that need an API key
+
+A feed URL may contain `{NAME}`, which is replaced by the environment variable
+`NAME` when the feed is downloaded. The `threatfox` and `urlhaus` feeds (abuse.ch)
+use `{ABUSECH_AUTH_KEY}`:
+
+```bash
+export ABUSECH_AUTH_KEY=your-key
+python aggregator.py --out data
+```
+
+In GitHub Actions, add the key as a repository secret named `ABUSECH_AUTH_KEY`.
+If the variable is not set, only those feeds fail ("environment variable ... is
+not set") and fall back to the previous release; the rest of the run is
+unaffected. The key is never written to the outputs, `manifest.json` or error
+messages.
+
 Query `blocklist.bin` for one or more IPs:
 
 ```bash
@@ -378,7 +395,7 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 ## Performance
 
-- Total feeds: 435
+- Total feeds: 437
 - Typical lookup latency: under 1 ms
 - Binary size, range counts and per-category totals for each run are in
   `manifest.json`; memory use scales with the size of `blocklist.bin`

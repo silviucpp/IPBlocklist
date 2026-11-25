@@ -4373,5 +4373,25 @@
         "confidence": 0.75,
         "flags": ["is_scanner"],
         "categories": ["attacks"]
+    },
+    {
+        "name": "threatfox",
+        "url": "https://threatfox-api.abuse.ch/v2/files/exports/{ABUSECH_AUTH_KEY}/recent.csv",
+        "description": "abuse.ch ThreatFox IP:port indicators (needs ABUSECH_AUTH_KEY)",
+        "regex": "^\"[^\"]*\", \"\\d+\", \"((?:\\d{1,3}\\.){3}\\d{1,3}):\\d+\", \"ip:port\"",
+        "base_score": 0.9,
+        "confidence": 0.85,
+        "flags": ["is_c2_server"],
+        "categories": ["malware", "botnet"]
+    },
+    {
+        "name": "urlhaus",
+        "url": "https://urlhaus-api.abuse.ch/v2/files/exports/{ABUSECH_AUTH_KEY}/recent.csv",
+        "description": "abuse.ch URLhaus online malware URLs hosted on bare IPs (needs ABUSECH_AUTH_KEY)",
+        "regex": "^\"\\d+\",\"[^\"]*\",\"https?://((?:\\d{1,3}\\.){3}\\d{1,3})(?::\\d+)?[^\"]*\",\"online\"",
+        "base_score": 0.9,
+        "confidence": 0.85,
+        "flags": ["is_malware"],
+        "categories": ["malware"]
     }
 ]
