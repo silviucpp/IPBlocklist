@@ -45,6 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write  # to start the demo page deployment
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -104,6 +105,12 @@ jobs:
             data/manifest.json \
             --title "Blocklist Update - $(date -u +'%Y-%m-%d %H:%M UTC')" \
             --notes-file release-notes.md
+
+      - name: Redeploy demo page
+        # Releases created with GITHUB_TOKEN do not trigger "release: published"
+        # workflows, but workflow_dispatch from GITHUB_TOKEN is allowed.
+        if: steps.changes.outputs.changed == 'true'
+        run: gh workflow run deploy-pages.yml --ref "${{ github.ref_name }}"
 
       - name: Clean up old releases
         if: steps.changes.outputs.changed == 'true'

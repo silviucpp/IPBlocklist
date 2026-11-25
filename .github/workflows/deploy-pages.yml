@@ -8,7 +8,7 @@ on:
       - .github/workflows/deploy-pages.yml
   release:
     types: [published]
-  workflow_dispatch:
+  workflow_dispatch:  # also started by the Update Feeds workflow after each release
 
 permissions:
   contents: read
@@ -34,11 +34,13 @@ jobs:
         run: |
           mkdir -p docs/data
           gh release download \
-            --repo tn3w/IPBlocklist \
+            --repo "$GITHUB_REPOSITORY" \
             --dir docs/data \
             --pattern blocklist.bin \
             --pattern asns.json \
             --pattern asn_prefixes.json
+          # the demo reads feed metadata that matches this build of blocklist.bin
+          cp feeds.json docs/data/feeds.json
 
       - uses: actions/configure-pages@v5
 
