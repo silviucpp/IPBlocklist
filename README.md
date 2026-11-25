@@ -28,6 +28,15 @@ scopes.
 
 The safety and reconciliation logic is adapted from [kboykov/Threatkill](https://github.com/kboykov/Threatkill) (Apache-2.0, see `NOTICE`).
 
+## Demo
+
+A live lookup page is available at
+[silviucpp.github.io/IPBlocklist](https://silviucpp.github.io/IPBlocklist/). It
+loads `blocklist.bin`, `feeds.json`, `asns.json` and `asn_prefixes.json`
+client-side from the latest release and supports IP and ASN queries with
+detailed results, feed metadata tooltips, score visualization and announced
+prefix listings per ASN.
+
 ## Downloads
 
 ```bash
