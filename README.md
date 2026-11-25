@@ -3,62 +3,39 @@
 # IPBlocklist
 
 <p align="center">
-<img src="https://img.shields.io/github/actions/workflow/status/tn3w/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
-<img src="https://img.shields.io/badge/feeds-163-blue?style=for-the-badge" alt="Feed Count">
-<img src="https://img.shields.io/badge/artifacts-4-green?style=for-the-badge" alt="Artifact Count">
+<img src="https://img.shields.io/github/actions/workflow/status/silviucpp/IPBlocklist/aggregate-feeds.yml?label=Build&style=for-the-badge" alt="GitHub Workflow Status">
+<img src="https://img.shields.io/badge/feeds-330-blue?style=for-the-badge" alt="Feed Count">
+<img src="https://img.shields.io/badge/artifacts-5-green?style=for-the-badge" alt="Artifact Count">
 </p>
 
 </div>
 
-IPBlocklist aggregates IP and ASN threat intelligence into four release
-artifacts:
+IPBlocklist aggregates IP and ASN intelligence (threat, anonymizer, hosting,
+crawler and network-type data) into five release artifacts:
 
 - `blocklist.bin`: compact binary data for application lookups
 - `blocklist.txt`: scored, CIDR-minimized text blocklist for firewalls
 - `asns.json`: normalized ASN lists keyed by feed name
 - `asn_prefixes.json`: cached ASN → announced prefixes
+- `manifest.json`: per-feed status, range counts and SHA-256 of every file
 
-The current dataset is built from 163 feeds and includes IPv4, IPv6, CIDR
-ranges, announced prefixes derived from ASN feeds, and proxy-type ranges from
-IP2X.
+The current dataset is built from 330 feeds and includes IPv4, IPv6, CIDR
+ranges and announced prefixes derived from ASN feeds. It covers threat sources
+(scanners, brute force, C2, malware, spam), anonymizers (Tor, VPN, proxies) and
+infrastructure (datacenters, cloud and CDN ranges, crawlers, ISP and mobile
+networks), including OXL risk-db-lists sources across ASN, network and IP
+scopes.
 
-The feed set includes OXL risk-db-lists sources for hosting, crawlers, VPNs,
-scanners, proxies, Tor, ISP, education, dynamic, and top-reported reputation
-lists across ASN, network, and IP scopes.
-
-## Demo
-
-A live lookup page is available at
-[ipblocklist.tn3w.dev](https://ipblocklist.tn3w.dev). It loads
-`blocklist.bin`, `feeds.json`, `asns.json`, and `asn_prefixes.json` client-side
-and supports IP and ASN queries with detailed results, feed metadata tooltips,
-score visualization, and announced prefix listings per ASN.
-
-For a minimal, highly optimized API server see
-[tn3w/ipblocklist-api](https://github.com/tn3w/ipblocklist-api):
-
-```bash
-curl https://ipblocklist-api.tn3w.dev/lookup/1.2.3.4
-```
-
-```json
-{
-    "ip": "1.2.3.4",
-    "max_score": 0.81,
-    "top_category": "spam",
-    "categories": ["malware", "spam"],
-    "flags": ["is_spammer", "is_phishing"],
-    "feeds": ["hphosts_psh", "hphosts_fsa"]
-}
-```
+The safety and reconciliation logic is adapted from [kboykov/Threatkill](https://github.com/kboykov/Threatkill) (Apache-2.0, see `NOTICE`).
 
 ## Downloads
 
 ```bash
-wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.bin
-wget https://github.com/tn3w/IPBlocklist/releases/latest/download/blocklist.txt
-wget https://github.com/tn3w/IPBlocklist/releases/latest/download/asns.json
-wget https://github.com/tn3w/IPBlocklist/releases/latest/download/asn_prefixes.json
+wget https://github.com/silviucpp/IPBlocklist/releases/latest/download/blocklist.bin
+wget https://github.com/silviucpp/IPBlocklist/releases/latest/download/blocklist.txt
+wget https://github.com/silviucpp/IPBlocklist/releases/latest/download/asns.json
+wget https://github.com/silviucpp/IPBlocklist/releases/latest/download/asn_prefixes.json
+wget https://github.com/silviucpp/IPBlocklist/releases/latest/download/manifest.json
 ```
 
 ## Visualizations
@@ -68,6 +45,7 @@ flowchart LR
     A[feeds.json] --> B[aggregator.py]
     B --> C[blocklist.bin]
     B --> D[asns.json]
+    B --> M[manifest.json]
     B --> E[scored ranges]
     E --> F[cidr_minimizer]
     F --> G[blocklist.txt]
@@ -75,13 +53,15 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[IP and CIDR feeds] --> D[normalize and deduplicate]
+    A[IP and CIDR feeds] --> D[normalize, filter bogons, deduplicate]
     B[ASN feeds from remote sources] --> C[RIPEstat announced prefixes]
     S[Static ASN lists in feeds.json] --> C
     C --> D
     S --> J[asns.json]
     B --> J
-    D --> E[blocklist.bin]
+    D --> R[reuse previous release for failed or shrunk feeds]
+    R --> V[run-level guard]
+    V --> E[blocklist.bin and manifest.json]
     D --> F[scoring and thresholding]
     F --> G[cidr_minimizer]
     G --> H[blocklist.txt]
@@ -89,12 +69,28 @@ flowchart TD
 
 ## Pipeline
 
-`aggregator.py` downloads feeds, resolves ASNs to prefixes via RIPEstat, merges
-overlapping ranges, and writes `blocklist.bin`, `asns.json`, and `blocklist.txt`.
+`aggregator.py` (a thin wrapper around the `ipblocklist/` package) downloads
+feeds, resolves ASNs to prefixes via RIPEstat, removes non-routable ranges,
+merges overlapping ranges, reconciles each feed with the previous release, and
+writes `blocklist.bin`, `asns.json`, `blocklist.txt`, `asn_prefixes.json` and
+`manifest.json`. See [Safety checks](#safety-checks).
 
 Feeds marked `is_asn` support remote (`url` + `regex`) or static (`asns`) input.
 Use `base_score: 0.0` to include an ASN feed in `blocklist.bin`/`asns.json`
 without affecting `blocklist.txt`.
+
+## Safety checks
+
+`python aggregator.py` validates and reconciles every run before writing anything:
+
+- **Config validation.** `feeds.json` is checked for duplicate names, unknown keys, flags or categories, bad scores, regexes without a capture group and non-HTTPS URLs (opt in per feed with `allow_http`).
+- **Never-block filter.** Private, loopback, link-local, CGNAT, multicast, reserved and documentation ranges are removed from every feed; for IPv6 only `2000::/3` is kept. A single entry wider than `/8` (IPv4) or `/16` (IPv6) is dropped and counted as `too_broad`.
+- **Per-feed fallback.** A feed that fails to download, returns nothing, or shrinks by more than half reuses the previous release's data (up to 7 runs; shrinkage is accepted after 2 runs). This needs the last release: `python aggregator.py --previous prev --out data` with `blocklist.bin` and `manifest.json` in `prev/`.
+- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% or grows past 300% of its previous range count. Override with `--force`.
+- **Manifest.** `manifest.json` records per-feed status, range counts, upstream `Last-Modified` age (feeds unchanged for over 180 days are flagged) and SHA-256 of every output file.
+- **ASN lookups.** Failed RIPEstat lookups are never cached.
+
+Use `--skip-txt` to build without the Rust `cidr_minimizer`. Run the tests with `python -m unittest discover -s tests -t .`.
 
 ## Artifacts
 
@@ -189,6 +185,7 @@ Common fields:
 - `is_c2_server`
 - `is_cdn`
 - `is_compromised`
+- `is_crawler`
 - `is_datacenter`
 - `is_isp`
 - `is_malware`
@@ -224,19 +221,33 @@ Optional fields:
 
 - `provider_name`
 - `asns`
+- `allow_http`: permit a plain `http://` URL (all others must be `https://`)
+
+`feeds.json` is validated on every run and in CI; unknown keys, flags or
+categories fail the build. The binary format stores categories in one byte and
+flags in four, so at most 8 categories and 32 distinct flags are supported.
 
 ## Usage
 
-Build the artifacts locally:
+Build the artifacts locally (outputs go to `--out`, default the current
+directory; `pip install curl_cffi` is needed for `bgp.tools` feeds):
 
 ```bash
-python aggregator.py
+python aggregator.py --out data
 ```
 
-ASN prefix lookups are cached in `asn_prefixes.json` (ASN → announced prefixes).
-On the first run the cache is empty and every ASN is resolved via RIPEstat.
-Subsequent runs skip resolved ASNs and only fetch new ones, making incremental
-rebuilds significantly faster. Delete `asn_prefixes.json` to force a full refresh.
+Options:
+
+- `--previous DIR`: directory with the last release's `blocklist.bin` and
+  `manifest.json`, used for the per-feed fallback and the run-level guard
+- `--force`: publish even if the run-level guard fails
+- `--skip-txt`: skip `blocklist.txt` (no Rust toolchain needed)
+- `--feeds FILE`, `--workers N`
+
+ASN prefix lookups are cached in `<out>/asn_prefixes.json` (ASN → announced
+prefixes). On the first run every ASN is resolved via RIPEstat; later runs
+reusing the same `--out` only fetch new ones. Failed lookups are never cached.
+Delete the file to force a full refresh. The CI workflow starts without a cache.
 
 Query `blocklist.bin` for one or more IPs:
 
@@ -358,12 +369,10 @@ print(ip_in_blocklist_txt("8.8.8.8"))
 
 ## Performance
 
-- Total feeds: 163
-- Proxy type ranges: 4.1M
-- Total entries: about 9.1M
+- Total feeds: 330
 - Typical lookup latency: under 1 ms
-- Binary size: about 12 MB
-- In-memory footprint: about 120 MB
+- Binary size, range counts and per-category totals for each run are in
+  `manifest.json`; memory use scales with the size of `blocklist.bin`
 
 ## Contributers
 
@@ -377,17 +386,3 @@ This project was developed with the assistance of AI tools, including GPT-5.4 an
 ## License
 
 [LICENSE](LICENSE)
-
-## Safety checks
-
-`python aggregator.py` validates and reconciles every run before writing anything:
-
-- **Config validation.** `feeds.json` is checked for duplicate names, unknown keys, flags or categories, bad scores, regexes without a capture group and non-HTTPS URLs (opt in per feed with `allow_http`).
-- **Never-block filter.** Private, loopback, link-local, CGNAT, multicast, reserved and documentation ranges are removed from every feed; for IPv6 only `2000::/3` is kept. A single entry wider than `/8` (IPv4) or `/16` (IPv6) is dropped and counted as `too_broad`.
-- **Per-feed fallback.** A feed that fails to download, returns nothing, or shrinks by more than half reuses the previous release's data (up to 7 runs; shrinkage is accepted after 2 runs). This needs the last release: `python aggregator.py --previous prev --out data` with `blocklist.bin` and `manifest.json` in `prev/`.
-- **Run-level guard.** The run exits with code 2 without writing outputs if more than 25% of feeds fail, or a category falls below 40% or grows past 300% of its previous range count. Override with `--force`.
-- **Manifest.** `manifest.json` records per-feed status, range counts, upstream `Last-Modified` age (feeds unchanged for over 180 days are flagged) and SHA-256 of every output file.
-- **ASN lookups.** Failed RIPEstat lookups are never cached.
-
-Use `--skip-txt` to build without the Rust `cidr_minimizer`. Run the tests with `python -m unittest discover -s tests -t .`.
-
